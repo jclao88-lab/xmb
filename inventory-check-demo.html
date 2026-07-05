@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>库存检查</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --shell: #d9e9f8;
+      --shell-line: #bfd3e6;
+      --title: #24384a;
+      --bg: #eef3f8;
+      --panel: #f4f8fc;
+      --field: #ffffff;
+      --line: #c7d3df;
+      --line-soft: #dfe7ef;
+      --blue: #0a6ed1;
+      --blue-dark: #085caf;
+      --text: #24313d;
+      --muted: #5f6f7d;
+      --good: #188038;
+      --warn: #b45f06;
+      --bad: #bb0000;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      background: #fff;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .shellbar {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--shell-line);
+      background: linear-gradient(90deg, #cfe2f3 0%, #eaf4ff 56%, #d7e7f7 100%);
+      color: var(--title);
+    }
+
+    .back {
+      width: 32px;
+      height: 32px;
+      border: 0;
+      background: transparent;
+      color: #36566f;
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 27px;
+      transform: skew(-12deg);
+      border-radius: 2px;
+      background: #0a6ed1;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .logo span {
+      transform: skew(12deg);
+    }
+
+    .shell-title {
+      min-width: 0;
+      font-size: 20px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .shell-title::after {
+      content: " ▾";
+      font-size: 15px;
+      color: #5a7288;
+    }
+
+    .shell-spacer {
+      flex: 1;
+    }
+
+    .shell-icon {
+      width: 32px;
+      height: 32px;
+      display: inline-grid;
+      place-items: center;
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      color: #385870;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .shell-icon:hover {
+      background: rgba(10, 110, 209, 0.12);
+    }
+
+    .variant-row {
+      height: 58px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 32px;
+      background: var(--bg);
+      color: #263949;
+      font-size: 23px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .variant-row span {
+      font-weight: 400;
+    }
+
+    .variant-row strong {
+      font-size: 16px;
+      color: #4d6275;
+    }
+
+    .filter-panel {
+      position: relative;
+      padding: 8px 22px 22px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(145px, 1fr));
+      gap: 10px 16px;
+      align-items: end;
+    }
+
+    .field {
+      min-width: 0;
+      display: grid;
+      gap: 5px;
+    }
+
+    .field label {
+      min-height: 17px;
+      color: #526273;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    input,
+    select {
+      width: 100%;
+      height: 30px;
+      padding: 4px 30px 4px 7px;
+      border: 1px solid #b8c6d3;
+      border-radius: 2px;
+      background: var(--field);
+      color: var(--text);
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 1px rgba(10, 110, 209, 0.26);
+    }
+
+    .value-help {
+      position: absolute;
+      right: 6px;
+      top: 5px;
+      width: 18px;
+      height: 18px;
+      display: inline-grid;
+      place-items: center;
+      color: #62798d;
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    .filter-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .link-btn {
+      border: 0;
+      background: transparent;
+      color: #315f86;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .go-btn {
+      height: 32px;
+      min-width: 48px;
+      border: 0;
+      border-radius: 4px;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.16);
+    }
+
+    .go-btn:hover {
+      background: var(--blue-dark);
+    }
+
+    .collapse-tab {
+      position: absolute;
+      left: 50%;
+      bottom: -16px;
+      width: 34px;
+      height: 18px;
+      transform: translateX(-50%);
+      border: 1px solid var(--line);
+      border-top: 0;
+      border-radius: 0 0 4px 4px;
+      background: #dce8f3;
+      color: #58728a;
+      text-align: center;
+      line-height: 16px;
+    }
+
+    .results {
+      padding: 26px 32px 30px;
+      background: #fff;
+    }
+
+    .result-head {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .result-title {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .toolbar {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tool {
+      width: 30px;
+      height: 30px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid #cad6e0;
+      border-radius: 3px;
+      background: #fff;
+      color: #2f577a;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .tool.active {
+      background: #0f5d9d;
+      color: #fff;
+      border-color: #0f5d9d;
+    }
+
+    .table-shell {
+      border: 1px solid #cbd6df;
+      overflow: auto;
+      background: #fff;
+      box-shadow: inset 0 1px 0 #f2f5f8;
+    }
+
+    table {
+      width: max-content;
+      min-width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th,
+    td {
+      height: 34px;
+      padding: 0 10px;
+      border-right: 1px solid #d7e0e8;
+      border-bottom: 1px solid #e3e9ef;
+      color: #42505c;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    th {
+      height: 39px;
+      background: #f6f8fa;
+      color: #4d5e6c;
+      font-weight: 800;
+      box-shadow: inset 0 -1px 0 #cbd6df;
+    }
+
+    tr:hover td {
+      background: #f2f7fc;
+    }
+
+    .num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      min-width: 58px;
+      height: 22px;
+      padding: 0 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .status.normal {
+      color: var(--good);
+      background: #e8f5e9;
+    }
+
+    .status.low {
+      color: var(--warn);
+      background: #fff4df;
+    }
+
+    .status.out {
+      color: var(--bad);
+      background: #fde8e8;
+    }
+
+    .row-action {
+      width: 34px;
+      text-align: center;
+      color: #4f6d86;
+      font-size: 22px;
+    }
+
+    @media (max-width: 1200px) {
+      .filter-grid {
+        grid-template-columns: repeat(4, minmax(145px, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shellbar {
+        padding: 0 10px;
+        gap: 8px;
+      }
+
+      .logo {
+        width: 42px;
+      }
+
+      .shell-title {
+        font-size: 16px;
+      }
+
+      .shell-icon {
+        display: none;
+      }
+
+      .variant-row {
+        height: 48px;
+        padding: 0 16px;
+        font-size: 20px;
+      }
+
+      .filter-panel {
+        padding: 8px 14px 18px;
+      }
+
+      .filter-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+      }
+
+      .results {
+        padding: 24px 14px;
+      }
+
+      .result-head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .toolbar {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="shellbar">
+    <button class="back" type="button" title="返回">‹</button>
+    <div class="logo"><span>XMB</span></div>
+    <div class="shell-title">库存检查</div>
+    <div class="shell-spacer"></div>
+    <button class="shell-icon" type="button" title="搜索">⌕</button>
+    <button class="shell-icon" type="button" title="用户">♙</button>
+  </header>
+
+  <section class="variant-row">
+    <span>Standard</span><strong>*</strong><span>⌄</span>
+  </section>
+
+  <section class="filter-panel" aria-label="查询条件">
+    <div class="filter-grid">
+      <div class="field">
+        <label for="skuFilter">商品编码:</label>
+        <div class="input-wrap">
+          <input id="skuFilter" value="DRK" />
+          <span class="value-help">▣</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="barcodeFilter">条码:</label>
+        <div class="input-wrap">
+          <input id="barcodeFilter" />
+          <span class="value-help">▣</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="nameFilter">商品名称:</label>
+        <div class="input-wrap">
+          <input id="nameFilter" />
+          <span class="value-help">▣</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="zhNameFilter">商品中文名称:</label>
+        <div class="input-wrap">
+          <input id="zhNameFilter" />
+          <span class="value-help">▣</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="categoryFilter">分类:</label>
+        <div class="input-wrap">
+          <select id="categoryFilter">
+            <option value="">全部</option>
+            <option>Drinks</option>
+            <option>Snacks</option>
+            <option>Food</option>
+            <option>Household</option>
+            <option>Dairy</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="statusFilter">库存状态:</label>
+        <div class="input-wrap">
+          <select id="statusFilter">
+            <option value="">全部</option>
+            <option value="正常">正常</option>
+            <option value="低库存">低库存</option>
+            <option value="缺货">缺货</option>
+            <option value="停用">停用</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="minQtyFilter">库存数量 >=</label>
+        <div class="input-wrap">
+          <input id="minQtyFilter" type="number" min="0" step="0.001" />
+          <span class="value-help">#</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="maxQtyFilter">库存数量 <=</label>
+        <div class="input-wrap">
+          <input id="maxQtyFilter" type="number" min="0" step="0.001" />
+          <span class="value-help">#</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="unitFilter">单位:</label>
+        <div class="input-wrap">
+          <select id="unitFilter">
+            <option value="">全部</option>
+            <option>pcs</option>
+            <option>pack</option>
+            <option>kg</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="activeFilter">是否启用:</label>
+        <div class="input-wrap">
+          <select id="activeFilter">
+            <option value="">全部</option>
+            <option value="TRUE">启用</option>
+            <option value="FALSE">停用</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="movementFilter">最后变动日期:</label>
+        <div class="input-wrap">
+          <input id="movementFilter" placeholder="2026-07-02" />
+          <span class="value-help">▣</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="supplierFilter">供应商:</label>
+        <div class="input-wrap">
+          <input id="supplierFilter" placeholder="可选" />
+          <span class="value-help">▣</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-actions">
+      <button class="link-btn" type="button">Adapt Filters (4)</button>
+      <button class="go-btn" id="goBtn" type="button">Go</button>
+    </div>
+    <div class="collapse-tab">⌃</div>
+  </section>
+
+  <section class="results">
+    <div class="result-head">
+      <h1 class="result-title" id="resultTitle">SEARCH_RESULTS</h1>
+      <div class="toolbar" aria-label="表格工具">
+        <button class="tool" type="button" title="显示">◉</button>
+        <button class="tool" type="button" title="隐藏">◌</button>
+        <button class="tool" type="button" title="设置">⚙</button>
+        <button class="tool" type="button" title="复制">▣</button>
+        <button class="tool" type="button" title="全屏">⛶</button>
+        <button class="tool" type="button" title="列表">☷</button>
+        <button class="tool" type="button" title="图表">▥</button>
+        <button class="tool active" type="button" title="表格">▦</button>
+      </div>
+    </div>
+
+    <div class="table-shell">
+      <table aria-label="库存查询结果">
+        <colgroup>
+          <col style="width: 38px" />
+          <col style="width: 148px" />
+          <col style="width: 132px" />
+          <col style="width: 176px" />
+          <col style="width: 124px" />
+          <col style="width: 104px" />
+          <col style="width: 126px" />
+          <col style="width: 68px" />
+          <col style="width: 92px" />
+          <col style="width: 92px" />
+          <col style="width: 106px" />
+          <col style="width: 100px" />
+          <col style="width: 112px" />
+          <col style="width: 178px" />
+          <col style="width: 72px" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th></th>
+            <th>商品编码</th>
+            <th>条码</th>
+            <th>商品名称</th>
+            <th>中文名称</th>
+            <th>分类</th>
+            <th>规格</th>
+            <th>单位</th>
+            <th class="num">成本价</th>
+            <th class="num">销售价</th>
+            <th class="num">当前库存</th>
+            <th class="num">最低库存</th>
+            <th>库存状态</th>
+            <th>最后变动时间</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="resultBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <script>
+    const products = [
+      { id: "11111111-1111-4111-8111-111111111111", sku: "DRK-COKE-500", barcode: "9551000000001", name: "Coca Cola 500ml", zh_name: "可乐 500ml", category: "Drinks", specification: "500ml bottle", unit: "pcs", cost_price: 1.2, sale_price: 2, min_stock: 24, is_active: "TRUE" },
+      { id: "22222222-2222-4222-8222-222222222222", sku: "DRK-WATER-600", barcode: "9551000000002", name: "Mineral Water 600ml", zh_name: "矿泉水 600ml", category: "Drinks", specification: "600ml bottle", unit: "pcs", cost_price: 0.45, sale_price: 1, min_stock: 48, is_active: "TRUE" },
+      { id: "33333333-3333-4333-8333-333333333333", sku: "SNK-CHIPS-60", barcode: "9551000000003", name: "Potato Chips Original", zh_name: "原味薯片", category: "Snacks", specification: "60g pack", unit: "pcs", cost_price: 1.1, sale_price: 2.2, min_stock: 20, is_active: "TRUE" },
+      { id: "44444444-4444-4444-8444-444444444444", sku: "FOOD-NOODLE-CUP", barcode: "9551000000004", name: "Cup Noodles Chicken", zh_name: "杯面", category: "Food", specification: "75g cup", unit: "pcs", cost_price: 1.35, sale_price: 2.5, min_stock: 18, is_active: "TRUE" },
+      { id: "55555555-5555-4555-8555-555555555555", sku: "HOME-TISSUE-4R", barcode: "9551000000005", name: "Tissue Paper 4 Rolls", zh_name: "纸巾 4卷装", category: "Household", specification: "4 rolls pack", unit: "pack", cost_price: 3.8, sale_price: 5.9, min_stock: 10, is_active: "TRUE" },
+      { id: "66666666-6666-4666-8666-666666666666", sku: "DAIRY-MILK-1L", barcode: "9551000000006", name: "Fresh Milk 1L", zh_name: "鲜奶 1L", category: "Dairy", specification: "1L carton", unit: "pcs", cost_price: 3.2, sale_price: 4.8, min_stock: 12, is_active: "TRUE" },
+    ];
+
+    const inventory = {
+      "11111111-1111-4111-8111-111111111111": { quantity: 72, last_movement_at: "2026-07-02T09:00:00+08:00" },
+      "22222222-2222-4222-8222-222222222222": { quantity: 120, last_movement_at: "2026-07-02T09:00:00+08:00" },
+      "33333333-3333-4333-8333-333333333333": { quantity: 45, last_movement_at: "2026-07-02T09:00:00+08:00" },
+      "44444444-4444-4444-8444-444444444444": { quantity: 36, last_movement_at: "2026-07-02T09:00:00+08:00" },
+      "55555555-5555-4555-8555-555555555555": { quantity: 18, last_movement_at: "2026-07-02T09:00:00+08:00" },
+      "66666666-6666-4666-8666-666666666666": { quantity: 24, last_movement_at: "2026-07-02T09:00:00+08:00" },
+    };
+
+    const rows = products.map((product) => {
+      const stock = inventory[product.id] || { quantity: 0, last_movement_at: "" };
+      let status = "正常";
+      if (product.is_active !== "TRUE") status = "停用";
+      else if (stock.quantity === 0) status = "缺货";
+      else if (stock.quantity <= product.min_stock) status = "低库存";
+
+      return { ...product, ...stock, status };
+    });
+
+    function includes(value, filter) {
+      return String(value || "").toLowerCase().includes(String(filter || "").trim().toLowerCase());
+    }
+
+    function statusClass(status) {
+      if (status === "低库存") return "low";
+      if (status === "缺货" || status === "停用") return "out";
+      return "normal";
+    }
+
+    function formatTime(value) {
+      if (!value) return "";
+      return value.replace("T", " ").replace("+08:00", "");
+    }
+
+    function render() {
+      const sku = document.getElementById("skuFilter").value;
+      const barcode = document.getElementById("barcodeFilter").value;
+      const name = document.getElementById("nameFilter").value;
+      const zhName = document.getElementById("zhNameFilter").value;
+      const category = document.getElementById("categoryFilter").value;
+      const status = document.getElementById("statusFilter").value;
+      const unit = document.getElementById("unitFilter").value;
+      const active = document.getElementById("activeFilter").value;
+      const movement = document.getElementById("movementFilter").value;
+      const minQty = document.getElementById("minQtyFilter").value;
+      const maxQty = document.getElementById("maxQtyFilter").value;
+
+      const filtered = rows.filter((row) => {
+        if (!includes(row.sku, sku)) return false;
+        if (!includes(row.barcode, barcode)) return false;
+        if (!includes(row.name, name)) return false;
+        if (!includes(row.zh_name, zhName)) return false;
+        if (category && row.category !== category) return false;
+        if (status && row.status !== status) return false;
+        if (unit && row.unit !== unit) return false;
+        if (active && row.is_active !== active) return false;
+        if (movement && !includes(row.last_movement_at, movement)) return false;
+        if (minQty !== "" && row.quantity < Number(minQty)) return false;
+        if (maxQty !== "" && row.quantity > Number(maxQty)) return false;
+        return true;
+      });
+
+      document.getElementById("resultTitle").textContent = `SEARCH_RESULTS (${filtered.length})`;
+      document.getElementById("resultBody").innerHTML = filtered.map((row, index) => `
+        <tr>
+          <td class="num">${index + 1}</td>
+          <td title="${row.sku}">${row.sku}</td>
+          <td title="${row.barcode}">${row.barcode}</td>
+          <td title="${row.name}">${row.name}</td>
+          <td title="${row.zh_name}">${row.zh_name}</td>
+          <td>${row.category}</td>
+          <td title="${row.specification}">${row.specification}</td>
+          <td>${row.unit}</td>
+          <td class="num">${row.cost_price.toFixed(2)}</td>
+          <td class="num">${row.sale_price.toFixed(2)}</td>
+          <td class="num">${row.quantity.toFixed(3)}</td>
+          <td class="num">${Number(row.min_stock).toFixed(3)}</td>
+          <td><span class="status ${statusClass(row.status)}">${row.status}</span></td>
+          <td>${formatTime(row.last_movement_at)}</td>
+          <td class="row-action">›</td>
+        </tr>
+      `).join("");
+    }
+
+    document.getElementById("goBtn").addEventListener("click", render);
+    document.querySelectorAll("input, select").forEach((element) => {
+      element.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") render();
+      });
+    });
+    render();
+  </script>
+  <script src="src/config.js"></script>
+  <script type="module">
+    import { supabase, hasSupabaseConfig } from "./src/supabase-client.js";
+
+    let supabaseRows = [];
+    let supabaseLoaded = false;
+
+    function includesRemote(value, filter) {
+      return String(value || "").toLowerCase().includes(String(filter || "").trim().toLowerCase());
+    }
+
+    function statusClassRemote(status) {
+      if (status === "低库存") return "low";
+      if (status === "缺货" || status === "停用") return "out";
+      return "normal";
+    }
+
+    function formatTimeRemote(value) {
+      if (!value) return "";
+      return value.replace("T", " ").replace("+08:00", "");
+    }
+
+    function toStatus(product, stock) {
+      const quantity = Number(stock?.quantity || 0);
+      const minStock = Number(product.min_stock || 0);
+      if (product.is_active === false) return "停用";
+      if (quantity === 0) return "缺货";
+      if (quantity <= minStock) return "低库存";
+      return "正常";
+    }
+
+    async function fetchInventoryRows() {
+      if (!hasSupabaseConfig()) {
+        throw new Error("缺少 Supabase 配置，请检查 src/config.js。");
+      }
+
+      const [{ data: productsData, error: productsError }, { data: inventoryData, error: inventoryError }] = await Promise.all([
+        supabase
+          .from("products")
+          .select("id,sku,barcode,name,zh_name,category,specification,unit,cost_price,sale_price,min_stock,is_active")
+          .order("sku", { ascending: true }),
+        supabase
+          .from("inventory")
+          .select("product_id,quantity,last_movement_at"),
+      ]);
+
+      if (productsError) throw productsError;
+      if (inventoryError) throw inventoryError;
+
+      const inventoryByProduct = new Map((inventoryData || []).map((item) => [item.product_id, item]));
+
+      return (productsData || []).map((product) => {
+        const stock = inventoryByProduct.get(product.id) || { quantity: 0, last_movement_at: "" };
+        return {
+          ...product,
+          quantity: Number(stock.quantity || 0),
+          last_movement_at: stock.last_movement_at || "",
+          status: toStatus(product, stock),
+        };
+      });
+    }
+
+    function renderSupabaseRows() {
+      const sku = document.getElementById("skuFilter").value;
+      const barcode = document.getElementById("barcodeFilter").value;
+      const name = document.getElementById("nameFilter").value;
+      const zhName = document.getElementById("zhNameFilter").value;
+      const category = document.getElementById("categoryFilter").value;
+      const status = document.getElementById("statusFilter").value;
+      const unit = document.getElementById("unitFilter").value;
+      const active = document.getElementById("activeFilter").value;
+      const movement = document.getElementById("movementFilter").value;
+      const minQty = document.getElementById("minQtyFilter").value;
+      const maxQty = document.getElementById("maxQtyFilter").value;
+
+      const filtered = supabaseRows.filter((row) => {
+        if (!includesRemote(row.sku, sku)) return false;
+        if (!includesRemote(row.barcode, barcode)) return false;
+        if (!includesRemote(row.name, name)) return false;
+        if (!includesRemote(row.zh_name, zhName)) return false;
+        if (category && row.category !== category) return false;
+        if (status && row.status !== status) return false;
+        if (unit && row.unit !== unit) return false;
+        if (active && String(row.is_active).toUpperCase() !== active) return false;
+        if (movement && !includesRemote(row.last_movement_at, movement)) return false;
+        if (minQty !== "" && row.quantity < Number(minQty)) return false;
+        if (maxQty !== "" && row.quantity > Number(maxQty)) return false;
+        return true;
+      });
+
+      document.getElementById("resultTitle").textContent = `SEARCH_RESULTS (${filtered.length})`;
+      document.getElementById("resultBody").innerHTML = filtered.map((row, index) => `
+        <tr>
+          <td class="num">${index + 1}</td>
+          <td title="${row.sku || ""}">${row.sku || ""}</td>
+          <td title="${row.barcode || ""}">${row.barcode || ""}</td>
+          <td title="${row.name || ""}">${row.name || ""}</td>
+          <td title="${row.zh_name || ""}">${row.zh_name || ""}</td>
+          <td>${row.category || ""}</td>
+          <td title="${row.specification || ""}">${row.specification || ""}</td>
+          <td>${row.unit || ""}</td>
+          <td class="num">${Number(row.cost_price || 0).toFixed(2)}</td>
+          <td class="num">${Number(row.sale_price || 0).toFixed(2)}</td>
+          <td class="num">${Number(row.quantity || 0).toFixed(3)}</td>
+          <td class="num">${Number(row.min_stock || 0).toFixed(3)}</td>
+          <td><span class="status ${statusClassRemote(row.status)}">${row.status}</span></td>
+          <td>${formatTimeRemote(row.last_movement_at)}</td>
+          <td class="row-action">›</td>
+        </tr>
+      `).join("");
+    }
+
+    async function loadSupabaseInventory() {
+      document.getElementById("resultTitle").textContent = "SEARCH_RESULTS (loading...)";
+      try {
+        supabaseRows = await fetchInventoryRows();
+        supabaseLoaded = true;
+        renderSupabaseRows();
+      } catch (error) {
+        supabaseLoaded = false;
+        document.getElementById("resultTitle").textContent = "SEARCH_RESULTS";
+        document.getElementById("resultBody").innerHTML = `
+          <tr>
+            <td colspan="15">无法读取 Supabase 库存数据：${error.message}</td>
+          </tr>
+        `;
+      }
+    }
+
+    document.getElementById("goBtn").addEventListener("click", (event) => {
+      if (!supabaseLoaded) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      renderSupabaseRows();
+    }, true);
+
+    loadSupabaseInventory();
+  </script>
+</body>
+</html>

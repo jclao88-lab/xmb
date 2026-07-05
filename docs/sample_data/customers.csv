@@ -1,0 +1,4 @@
+﻿id,name,zh_name,phone,country,province,city,address,note,is_active
+cccccccc-cccc-cccc-cccc-cccccc000001,Lee,高帅富,+60 12-111 2233,Malaysia,Johor,Johor Bahru,21 Jalan Kuning,Regular customer,TRUE
+cccccccc-cccc-cccc-cccc-cccccc000002,Mr Wang,隔壁老王,+60 13-444 5566,Malaysia,Johor,Johor Bahru,9 Jalan Damai,Buys drinks by carton,TRUE
+cccccccc-cccc-cccc-cccc-cccccc000003,Walk-in Customer,零售客户,,Malaysia,Johor,Johor Bahru,,Default customer for non-member sales,TRUE

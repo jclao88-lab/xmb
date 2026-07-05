@@ -1,0 +1,8 @@
+﻿id,name,zh_name,contact_name,phone,country,province,city,address,note,is_active
+aaaaaaaa-aaaa-aaaa-aaaa-aaaaaa000001,Shanghai No. 1 Food Company,上海第一食品公司,Mr. Zong,+86 21 12345688,China,Shanghai,Shghai,88 Renmin Road,Milk and chilled goods supplier,TRUE
+aaaaaaaa-aaaa-aaaa-aaaa-aaaaaa000002,Singapore No. 1 Food Company,新加坡第一食品公司,Mr. Ng,+65 88888888,Singapore,Singapore,Singapore,88 Orchard Road,Milk and chilled goods supplier,TRUE
+aaaaaaaa-aaaa-aaaa-aaaa-aaaaaa000003,ABC Food Supply Sdn Bhd,ABC食品有限公司,Mr Tan,+60 12-345 6789,Malaysia,Johor,Johor Bahru,12 Jalan Market 1,Main dry goods and snacks supplier,TRUE
+aaaaaaaa-aaaa-aaaa-aaaa-aaaaaa000004,Fresh Dairy Trading,Fresh乳业,Ms Lim,+60 11-222 3344,Malaysia,Johor,Johor Bahru,88 Jalan Susu,Milk and chilled goods supplier,TRUE
+aaaaaaaa-aaaa-aaaa-aaaa-aaaaaa000005,Daily Essentials Wholesale,WholeSale 批发,Mr Wong,+60 16-888 1122,Malaysia,Johor,Kulai,5 Industrial Park Road,Household and paper products,TRUE
+aaaaaaaa-aaaa-aaaa-aaaa-aaaaaa000006,Shanghai No. 1 Food Company,上海第二食品公司,Mr. Zong,+86 21 12345678,China,Shanghai,Shghai,66 Renmin Road,Milk and chilled goods supplier,TRUE
+aaaaaaaa-aaaa-aaaa-aaaa-aaaaaa000007,Singapore No. 1 Food Company,新加坡第二食品公司,Mr. Ng,+65 88888886,Singapore,Singapore,Singapore,66 Orchard Road,Milk and chilled goods supplier,TRUE
