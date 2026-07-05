@@ -12,6 +12,9 @@ coverage/
 # Local verification artifacts
 output/
 
+# Local reference screenshots
+store/
+
 # OS/editor noise
 .DS_Store
 Thumbs.db
