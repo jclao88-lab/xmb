@@ -1045,6 +1045,7 @@
         salesOrderSavedConfirmed: "销售订单已保存。",
         salesOrderConfirmSave: "确认保存销售订单？保存后订单状态将变为已确认。",
         salesOrderFormReady: "请输入客户和商品明细。",
+        salesOrderQuantityBelowShipped: "修改后的订单数量不能少于已发货数量。",
         shipSalesOrderPending: "销售订单发货功能后续开发。",
         posCheckoutTitle: "收银销售",
         posCheckoutSub: "扫描或输入商品，确认后扣减库存并生成销售单。",
@@ -1298,6 +1299,7 @@
         salesOrderSavedConfirmed: "Sales order saved.",
         salesOrderConfirmSave: "Save this sales order? The order status will become confirmed.",
         salesOrderFormReady: "Enter customer and product lines.",
+        salesOrderQuantityBelowShipped: "Updated order quantity cannot be less than shipped quantity.",
         shipSalesOrderPending: "Sales order shipment will be built later.",
         posCheckoutTitle: "POS Checkout",
         posCheckoutSub: "Scan or enter products, then confirm to reduce stock and create a sales order.",
@@ -4211,7 +4213,7 @@
       }
 
       function blankSalesOrderLine() {
-        return { product_id: "", sku: "", name: "", zh_name: "", unit: "pcs", quantity: 1, unit_price: 0, discount_amount: 0, line_amount: 0, shipped_date: "" };
+        return { product_id: "", sku: "", name: "", zh_name: "", unit: "pcs", quantity: 1, shipped_quantity: 0, is_shipped_complete: false, unit_price: 0, discount_amount: 0, line_amount: 0, shipped_date: "" };
       }
 
       function renderSalesOrderForm(order = null, options = {}) {
@@ -4261,10 +4263,12 @@
                   <th>${t("productName")}</th>
                   <th>${t("unit")}</th>
                   <th>${t("quantity")}</th>
+                  <th>${t("shippedQuantity")}</th>
                   <th>${t("shippedDate")}</th>
                   <th>${t("unitPrice")}</th>
                   <th>${t("discountAmount")}</th>
                   <th>${t("lineAmount")}</th>
+                  <th>${t("isShippedComplete")}</th>
                   <th>${t("actions")}</th>
                 </tr>
               </thead>
@@ -4300,6 +4304,9 @@
           const gross = Number(line.quantity || 0) * Number(line.unit_price || 0);
           line.line_amount = Number(Math.max(0, gross - Number(line.discount_amount || 0)).toFixed(2));
           const lineReadonly = salesOrderFormReadonly || isSalesOrderLineLocked(line);
+          const shippedQuantity = Number(line.shipped_quantity || 0);
+          const minimumQuantity = Number(Math.max(0.001, shippedQuantity).toFixed(3));
+          line.is_shipped_complete = shippedQuantity > 0 && Number(line.quantity || 0) <= shippedQuantity ? true : line.is_shipped_complete === true;
           const productCell = lineReadonly
             ? escapeHtml(line.sku)
             : `<div class="lookup-line">
@@ -4312,12 +4319,14 @@
               <td>${productCell}</td>
               <td>${escapeHtml(line.zh_name || line.name)}</td>
               <td>${escapeHtml(line.unit)}</td>
-              <td>${lineReadonly ? escapeHtml(line.quantity) : `<input data-so-line-qty="${index}" type="number" min="0.001" step="0.001" value="${escapeHtml(line.quantity)}">`}</td>
+              <td>${lineReadonly ? escapeHtml(line.quantity) : `<input data-so-line-qty="${index}" type="number" min="${escapeHtml(minimumQuantity)}" step="0.001" value="${escapeHtml(line.quantity)}">`}</td>
+              <td>${escapeHtml(shippedQuantity)}</td>
               <td>${lineReadonly ? escapeHtml(line.shipped_date || "") : `<input data-so-line-shipped-date="${index}" type="date" value="${escapeHtml(line.shipped_date || "")}" required>`}</td>
               <td>${lineReadonly ? money(line.unit_price) : `<input data-so-line-price="${index}" type="number" min="0" step="0.01" value="${escapeHtml(line.unit_price)}">`}</td>
               <td>${lineReadonly ? money(line.discount_amount || 0) : `<input data-so-line-discount="${index}" type="number" min="0" step="0.01" value="${escapeHtml(line.discount_amount || 0)}">`}</td>
               <td>${money(line.line_amount)}</td>
-              <td>${lineReadonly ? "" : `<button class="tool-btn" type="button" data-so-remove-line="${index}">${t("remove")}</button>`}</td>
+              <td>${escapeHtml(booleanLabel(line.is_shipped_complete === true))}</td>
+              <td>${lineReadonly || shippedQuantity > 0 ? "" : `<button class="tool-btn" type="button" data-so-remove-line="${index}">${t("remove")}</button>`}</td>
             </tr>
           `;
         }).join("");
@@ -4491,15 +4500,18 @@
           const validLines = salesOrderLines
             .filter((line) => line.product_id && Number(line.quantity) > 0 && line.shipped_date)
             .map((line) => {
+              const shippedQuantity = Number(line.shipped_quantity || 0);
+              const quantity = Number(line.quantity);
+              if (quantity < shippedQuantity) throw new Error(t("salesOrderQuantityBelowShipped"));
               const gross = Number(line.quantity || 0) * Number(line.unit_price || 0);
               const lineDiscount = Number(line.discount_amount || 0);
               return {
                 id: line.id || null,
                 locked: isSalesOrderLineLocked(line),
                 product_id: line.product_id,
-                quantity: Number(line.quantity),
-                shipped_quantity: Number(line.shipped_quantity || 0),
-                is_shipped_complete: line.is_shipped_complete === true,
+                quantity,
+                shipped_quantity: shippedQuantity,
+                is_shipped_complete: shippedQuantity > 0 && quantity <= shippedQuantity ? true : line.is_shipped_complete === true,
                 unit_price: Number(line.unit_price || 0),
                 discount_amount: Number(lineDiscount.toFixed(2)),
                 line_amount: Number(Math.max(0, gross - lineDiscount).toFixed(2)),
@@ -4509,6 +4521,10 @@
           const hasIncompleteLine = salesOrderLines.some((line) => line.product_id || Number(line.quantity) > 0 || line.shipped_date)
             && salesOrderLines.some((line) => !line.product_id || Number(line.quantity) <= 0 || !line.shipped_date);
           if (!validLines.length || hasIncompleteLine) throw new Error(t("salesOrderNeedProduct"));
+          const keptLineIds = validLines.filter((line) => line.id).map((line) => line.id);
+          const removedShippedLine = (currentSalesOrder?.lines || [])
+            .some((line) => line.id && Number(line.shipped_quantity || 0) > 0 && !keptLineIds.includes(line.id));
+          if (removedShippedLine) throw new Error(t("salesOrderQuantityBelowShipped"));
           if (status === "confirmed" && !window.confirm(t("salesOrderConfirmSave"))) return;
 
           const client = getClient();
@@ -4543,9 +4559,8 @@
           }
 
           if (currentSalesOrder?.id) {
-            const keptLineIds = validLines.filter((line) => line.id).map((line) => line.id);
             const removableLineIds = (currentSalesOrder.lines || [])
-              .filter((line) => line.id && !isSalesOrderLineLocked(line) && !keptLineIds.includes(line.id))
+              .filter((line) => line.id && !isSalesOrderLineLocked(line) && Number(line.shipped_quantity || 0) <= 0 && !keptLineIds.includes(line.id))
               .map((line) => line.id);
             if (removableLineIds.length) {
               const deleteResult = await client.from("sales_order_items").delete().in("id", removableLineIds);
