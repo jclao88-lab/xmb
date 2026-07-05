@@ -1588,8 +1588,8 @@
 
     const tiles = [
       { section: "overview", title: { "zh-CN": "今日销售额", en: "Today Sales Amount" }, sub: { "zh-CN": "今日已收款销售额", en: "Sales collected today" }, roles: ["owner", "manager"], metric: "2,860", unit: "", trend: { "zh-CN": "比昨日 +12%", en: "+12% vs yesterday" } },
-      { section: "overview", title: { "zh-CN": "今日订单数", en: "Today Sales Orders" }, sub: { "zh-CN": "今日创建的收银销售订单", en: "POS orders created today" }, roles: ["owner", "manager", "cashier"], metric: "0", dynamicMetric: "todayPosOrderCount", unit: { "zh-CN": "单", en: "orders" }, trend: { "zh-CN": "营业中", en: "Open" } },
-      { section: "overview", title: { "zh-CN": "待发货订单", en: "Pending Shipment" }, sub: { "zh-CN": "等待发货的订单行", en: "Orders waiting to ship" }, roles: ["owner", "manager", "cashier"], metric: "8", unit: { "zh-CN": "行", en: "lines" }, trend: { "zh-CN": "2 行超时", en: "2 lines overdue" }, warn: true },
+      { section: "overview", title: { "zh-CN": "今日订单数", en: "Today Sales Orders" }, sub: { "zh-CN": "今日创建的收银销售订单", en: "POS orders created today" }, roles: ["owner", "manager"], metric: "0", dynamicMetric: "todayPosOrderCount", unit: { "zh-CN": "单", en: "orders" }, trend: { "zh-CN": "营业中", en: "Open" } },
+      { section: "overview", title: { "zh-CN": "待发货订单", en: "Pending Shipment" }, sub: { "zh-CN": "等待发货的订单行", en: "Orders waiting to ship" }, roles: ["owner", "manager"], metric: "8", unit: { "zh-CN": "行", en: "lines" }, trend: { "zh-CN": "2 行超时", en: "2 lines overdue" }, warn: true },
       { section: "overview", title: { "zh-CN": "销售趋势", en: "Sales Trend" }, sub: { "zh-CN": "最近 4 天", en: "Last 4 Days" }, roles: ["owner", "manager"], table: [["Mon", "1,920"], ["Tue", "2,140"], ["Wed", "2,520"], [{ "zh-CN": "Today", en: "Today" }, "2,860"]], trend: { "zh-CN": "20 分钟前", en: "20 min. ago" } },
 
       { section: "daily", title: { "zh-CN": "收银销售", en: "POS Checkout" }, sub: { "zh-CN": "收银台销售", en: "Cashier sales" }, roles: ["owner", "manager", "cashier"], icon: "$", action: "posCheckout" },
