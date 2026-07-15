@@ -465,6 +465,198 @@
       font-weight: 800;
     }
 
+    .tile-icon.smart-query-tile-icon {
+      width: 30px;
+      height: 30px;
+      margin-top: 13px;
+      border: 0;
+      border-radius: 9px;
+      background: linear-gradient(145deg, #0f4c81, #7c3aed);
+      color: #fff;
+      box-shadow: 0 5px 14px rgba(79, 70, 229, 0.2);
+    }
+
+    .smart-query-tile-icon svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .smart-query-modal {
+      position: fixed;
+      z-index: 1000;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(15, 23, 42, 0.52);
+      backdrop-filter: blur(3px);
+    }
+
+    .smart-query-modal[hidden] {
+      display: none;
+    }
+
+    .smart-query-dialog {
+      position: relative;
+      width: min(520px, 100%);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 28px 80px rgba(15, 23, 42, 0.3);
+    }
+
+    .smart-query-dialog::before {
+      position: absolute;
+      inset: 0 0 auto;
+      height: 180px;
+      background:
+        radial-gradient(circle at 18% 15%, rgba(56, 189, 248, 0.28), transparent 38%),
+        radial-gradient(circle at 80% 5%, rgba(167, 139, 250, 0.3), transparent 42%),
+        linear-gradient(180deg, #f5f8ff, #fff);
+      content: "";
+      pointer-events: none;
+    }
+
+    .smart-query-content {
+      position: relative;
+      padding: 28px 30px 30px;
+      text-align: center;
+    }
+
+    .smart-query-close {
+      position: absolute;
+      z-index: 1;
+      top: 16px;
+      right: 16px;
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.72);
+      color: #64748b;
+      cursor: pointer;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .smart-query-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 6px;
+      color: #172554;
+    }
+
+    .smart-query-brand-mark {
+      display: inline-grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border-radius: 10px;
+      background: linear-gradient(145deg, #0f4c81, #7c3aed);
+      color: #fff;
+      box-shadow: 0 7px 18px rgba(79, 70, 229, 0.22);
+    }
+
+    .smart-query-brand-mark svg {
+      width: 21px;
+      height: 21px;
+    }
+
+    .smart-query-brand h2 {
+      margin: 0;
+      font-size: 25px;
+      letter-spacing: -0.02em;
+    }
+
+    .smart-query-intro {
+      margin: 4px auto 20px;
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    .smart-query-mic {
+      display: grid;
+      width: 116px;
+      height: 116px;
+      place-items: center;
+      margin: 0 auto 22px;
+      border: 1px solid #dbeafe;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff 0 48%, #eff6ff 49% 66%, #f8fafc 67%);
+      color: #2563eb;
+      box-shadow: 0 12px 34px rgba(37, 99, 235, 0.14);
+    }
+
+    .smart-query-mic svg {
+      width: 42px;
+      height: 42px;
+    }
+
+    .smart-query-input-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 46px;
+      gap: 8px;
+      padding: 6px;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 7px 22px rgba(15, 23, 42, 0.07);
+    }
+
+    .smart-query-input-wrap:focus-within {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12), 0 7px 22px rgba(15, 23, 42, 0.07);
+    }
+
+    .smart-query-input {
+      min-width: 0;
+      height: 42px;
+      padding: 0 10px;
+      border: 0;
+      outline: 0;
+      color: #0f172a;
+      font: inherit;
+    }
+
+    .smart-query-submit {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 0;
+      border-radius: 10px;
+      background: linear-gradient(145deg, #0f6cbd, #4f46e5);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .smart-query-submit:hover {
+      filter: brightness(1.06);
+    }
+
+    .smart-query-submit svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .smart-query-status {
+      min-height: 18px;
+      margin: 11px 4px 0;
+      color: #64748b;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    .smart-query-status.error {
+      color: #b42318;
+    }
+
+    body.smart-query-open {
+      overflow: hidden;
+    }
+
     .mini-table {
       width: 100%;
       margin-top: 10px;
@@ -753,6 +945,130 @@
       padding: 0;
     }
 
+    .analytics-filters {
+      margin-bottom: 14px;
+    }
+
+    .analytics-filter-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .analytics-filter-grid label {
+      display: grid;
+      gap: 5px;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .analytics-filter-actions {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .analytics-kpis {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(130px, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .analytics-kpi {
+      min-height: 84px;
+      padding: 12px;
+      border: 1px solid #d8dde3;
+      background: #fff;
+    }
+
+    .analytics-kpi span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .analytics-kpi strong {
+      display: block;
+      margin-top: 10px;
+      color: #0f4c81;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .analytics-tabs {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      margin: 0 0 12px;
+      padding-bottom: 2px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .analytics-tab {
+      min-height: 34px;
+      padding: 0 12px;
+      border: 1px solid transparent;
+      border-bottom: 0;
+      background: transparent;
+      color: #475569;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .analytics-tab.active {
+      border-color: var(--line);
+      background: #fff;
+      color: #0f4c81;
+    }
+
+    .analytics-chart {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      background: #fbfcfd;
+    }
+
+    .analytics-bar-row {
+      display: grid;
+      grid-template-columns: minmax(86px, 130px) minmax(160px, 1fr) 110px;
+      gap: 10px;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .analytics-bar-track {
+      height: 12px;
+      overflow: hidden;
+      background: #e9eef3;
+    }
+
+    .analytics-bar-fill {
+      height: 100%;
+      min-width: 2px;
+      background: #0f6cbd;
+    }
+
+    .analytics-note {
+      margin: 0 0 10px;
+      color: #7a4b00;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .analytics-empty {
+      padding: 28px 12px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+    }
+
     .logout-btn {
       display: none;
       height: 28px;
@@ -806,6 +1122,14 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
+      .analytics-filter-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .analytics-kpis {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
       .tile {
         min-height: 118px;
       }
@@ -847,6 +1171,23 @@
 
       .form-grid {
         grid-template-columns: 1fr;
+      }
+
+      .analytics-filter-grid,
+      .analytics-kpis {
+        grid-template-columns: 1fr;
+      }
+
+      .analytics-bar-row {
+        grid-template-columns: 80px minmax(110px, 1fr) 90px;
+      }
+
+      .smart-query-content {
+        padding: 26px 18px 22px;
+      }
+
+      .smart-query-brand h2 {
+        font-size: 22px;
       }
     }
   </style>
@@ -925,12 +1266,12 @@
         <div class="role-badge" id="roleBadge">角色</div>
       </div>
 
-      <section class="section" data-section="overview">
+      <section class="section" data-section="manage">
         <div class="section-title">
-          <span class="section-title-text" data-i18n="salesOverview">销售概览</span>
-          <button class="section-toggle" type="button" data-section-toggle="overview"></button>
+          <span class="section-title-text" data-i18n="managementFunctions">管理功能</span>
+          <button class="section-toggle" type="button" data-section-toggle="manage"></button>
         </div>
-        <div class="tiles" id="overviewTiles"></div>
+        <div class="tiles" id="manageTiles"></div>
       </section>
 
       <section class="section" data-section="daily">
@@ -949,13 +1290,32 @@
         <div class="tiles" id="purchaseTiles"></div>
       </section>
 
-      <section class="section" data-section="manage">
-        <div class="section-title">
-          <span class="section-title-text" data-i18n="managementFunctions">管理功能</span>
-          <button class="section-toggle" type="button" data-section-toggle="manage"></button>
+      <div class="smart-query-modal" id="smartQueryModal" role="dialog" aria-modal="true" aria-labelledby="smartQueryTitle" hidden>
+        <div class="smart-query-dialog">
+          <button class="smart-query-close" type="button" data-smart-query-close aria-label="Close">×</button>
+          <div class="smart-query-content">
+            <div class="smart-query-brand">
+              <span class="smart-query-brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8c.55 4.85 2.35 6.65 7.2 7.2-4.85.55-6.65 2.35-7.2 7.2-.55-4.85-2.35-6.65-7.2-7.2 4.85-.55 6.65-2.35 7.2-7.2Z" fill="currentColor"/><circle cx="19" cy="18.5" r="2" fill="currentColor" opacity=".7"/></svg>
+              </span>
+              <h2 id="smartQueryTitle">AI powered</h2>
+            </div>
+            <p class="smart-query-intro" data-i18n="smartQueryIntro">说出或输入您想查看的报表</p>
+            <div class="smart-query-mic" role="img" data-i18n-aria-label="smartQueryVoicePending" aria-label="语音查询即将开放">
+              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect x="17" y="7" width="14" height="25" rx="7" fill="currentColor"/><path d="M11 23a13 13 0 0 0 26 0M24 36v6m-7 0h14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+            </div>
+            <form id="smartQueryForm">
+              <div class="smart-query-input-wrap">
+                <input class="smart-query-input" id="smartQueryInput" type="text" autocomplete="off" data-i18n-placeholder="smartQueryPlaceholder" placeholder="例如：查看客户销售排行" aria-label="Smart Query">
+                <button class="smart-query-submit" type="submit" data-i18n-aria-label="smartQuerySubmit" aria-label="查询">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 13-7-4.7 14-2.2-5.1L5 12Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                </button>
+              </div>
+              <p class="smart-query-status" id="smartQueryStatus" aria-live="polite" data-i18n="smartQueryHint">支持查询现有的销售、采购和库存分析报表。</p>
+            </form>
+          </div>
         </div>
-        <div class="tiles" id="manageTiles"></div>
-      </section>
+      </div>
 
       <section class="feature-workspace" id="featureWorkspace" hidden>
         <div class="feature-head">
@@ -988,10 +1348,16 @@
         loginScriptPending: "Supabase Auth 登录脚本还未接管，请刷新页面后重试。",
         authStatus: "正在检查登录状态...",
         welcomeBack: "欢迎回来",
-        salesOverview: "销售概览",
         dailyOperations: "日常操作",
         purchaseInventory: "采购与库存",
         managementFunctions: "管理功能",
+        smartQueryIntro: "说出或输入您想查看的报表",
+        smartQueryPlaceholder: "例如：查看客户销售排行",
+        smartQueryHint: "支持查询现有的销售、采购和库存分析报表。",
+        smartQueryVoicePending: "语音查询即将开放",
+        smartQuerySubmit: "查询",
+        smartQueryEmpty: "请输入您想查看的报表。",
+        smartQueryNoMatch: "暂时找不到对应的现有报表，请尝试“销售趋势”“客户排行”或“库存价值”。",
         expandSection: "展开",
         collapseSection: "收起",
         backToLaunchpad: "返回功能总览",
@@ -1210,6 +1576,104 @@
         userSaved: "员工资料已保存。",
         userDisabled: "员工已停用。",
         userEnabled: "员工已启用。",
+        salesAnalyticsTitle: "销售分析",
+        salesAnalyticsSub: "分析已确认订单的销售表现、客户、商品、渠道和估算毛利。",
+        salesAnalyticsReady: "默认显示本月已确认订单。",
+        salesAnalyticsLoading: "正在读取销售分析数据...",
+        salesAnalyticsLoaded: "已统计 {orders} 张订单和 {lines} 行销售明细。",
+        salesAnalyticsNoData: "当前条件下没有已确认销售订单。",
+        salesAnalyticsFailed: "读取销售分析失败：{message}",
+        exportCurrentReport: "导出当前报表",
+        analyticsDateFrom: "订单日期从",
+        analyticsDateTo: "订单日期到",
+        analyticsChannel: "销售渠道",
+        analyticsAllChannels: "全部渠道",
+        analyticsPos: "POS 销售",
+        analyticsRegular: "普通销售",
+        analyticsAllCustomers: "全部客户",
+        analyticsAllProducts: "全部商品",
+        analyticsAllCategories: "全部分类",
+        analyticsAllPayments: "全部支付方式",
+        analyticsSalesAmount: "销售额",
+        analyticsOrderCount: "订单数",
+        analyticsSalesQuantity: "销售数量",
+        analyticsAverageOrder: "平均客单价",
+        analyticsEstimatedProfit: "估算毛利",
+        analyticsGrossMargin: "毛利率",
+        analyticsTrend: "销售趋势",
+        analyticsProductRanking: "商品排行",
+        analyticsCustomerRanking: "客户排行",
+        analyticsCategoryBreakdown: "分类构成",
+        analyticsPaymentBreakdown: "付款方式",
+        analyticsChannelComparison: "渠道对比",
+        analyticsProfitAnalysis: "毛利估算",
+        analyticsSalesShare: "销售占比",
+        analyticsLatestOrder: "最近购买日期",
+        analyticsNetSales: "净销售额",
+        analyticsCurrentCost: "当前成本",
+        analyticsEstimatedGrossProfit: "估算毛利",
+        analyticsCurrentCostNote: "毛利按商品当前成本价估算，不代表历史实际成本。",
+        analyticsZeroCostWarning: "有 {count} 个商品的当前成本价为 0，请检查毛利结果。",
+        analyticsUnassigned: "未指定",
+        analyticsPosCustomer: "POS 散客",
+        analyticsCsvReady: "当前报表已导出。",
+        purchaseInventoryAnalyticsTitle: "采购与库存分析",
+        purchaseInventoryAnalyticsSub: "分析采购、供应商、到货履约、库存价值和库存收发趋势。",
+        purchaseInventoryReady: "默认显示本月已确认采购和当前库存快照。",
+        purchaseInventoryLoading: "正在读取采购与库存分析数据...",
+        purchaseInventoryLoaded: "已统计 {orders} 张采购单、{lines} 行采购明细、{products} 个商品和 {movements} 条库存流水。",
+        purchaseInventoryNoData: "当前条件下没有可显示的数据。",
+        purchaseInventoryFailed: "读取采购与库存分析失败：{message}",
+        piPurchaseTrend: "采购趋势",
+        piSupplierAnalysis: "供应商分析",
+        piProductRanking: "商品/分类排行",
+        piFulfillment: "采购履约",
+        piInventoryValue: "库存价值与结构",
+        piMovementTrend: "库存收发趋势",
+        piPurchaseAmount: "采购金额",
+        piPurchaseOrders: "采购单数",
+        piSupplierCount: "供应商数",
+        piReceivedValue: "已收货价值",
+        piPendingValue: "待收货价值",
+        piReceiptRate: "金额收货率",
+        piSupplierAll: "全部供应商",
+        piMovementAll: "全部移动类型",
+        piGroupBy: "汇总周期",
+        piGroupDay: "按日",
+        piGroupWeek: "按周",
+        piGroupMonth: "按月",
+        piRankingView: "排行方式",
+        piByProduct: "按商品",
+        piByCategory: "按分类",
+        piPeriod: "期间",
+        piDistinctProducts: "商品数",
+        piAverageOrder: "平均订单金额",
+        piAverageUnitCost: "加权平均采购价",
+        piPurchaseShare: "采购占比",
+        piOpenLines: "待收货行",
+        piOverdueLines: "逾期行",
+        piOverdueValue: "逾期金额",
+        piEarliestDue: "最早到货日",
+        piOverdue: "已逾期",
+        piDueToday: "今天到期",
+        piDueOneToSeven: "未来 1–7 天",
+        piDueEightToThirty: "未来 8–30 天",
+        piDueLater: "未来 31 天以上",
+        piDueMissing: "未指定日期",
+        piStockValue: "库存成本估值",
+        piRetailValue: "库存销售价值",
+        piCurrentCostEstimate: "库存价值按商品当前成本价估算，不代表历史实际成本。",
+        piZeroCostWarning: "有 {count} 个有库存商品的当前成本价为 0，请检查估值。",
+        piMovementCount: "流水笔数",
+        piInboundQuantity: "流入数量",
+        piOutboundQuantity: "流出数量",
+        piNetQuantity: "净变动数量",
+        piMovementUnitNote: "不同计量单位不会合并；数量仅按商品和单位汇总。",
+        piViewDetails: "查看明细",
+        piCurrentSnapshot: "当前库存快照",
+        piExported: "当前采购与库存报表已导出。",
+        orderDateFrom: "订单日期从",
+        orderDateTo: "订单日期到",
         businessFeature: "业务功能",
         chooseFeature: "请选择功能。",
         userChip: "{name} · {role}",
@@ -1242,10 +1706,16 @@
         loginScriptPending: "The Supabase Auth script has not taken over yet. Refresh and try again.",
         authStatus: "Checking sign-in status...",
         welcomeBack: "Welcome back",
-        salesOverview: "Sales Overview",
         dailyOperations: "Daily Operations",
         purchaseInventory: "Purchasing and Inventory",
         managementFunctions: "Management",
+        smartQueryIntro: "Say or type the report you want to view",
+        smartQueryPlaceholder: "For example: show customer sales ranking",
+        smartQueryHint: "Search the existing sales, purchasing, and inventory analytics reports.",
+        smartQueryVoicePending: "Voice query is coming soon",
+        smartQuerySubmit: "Search",
+        smartQueryEmpty: "Enter the report you want to view.",
+        smartQueryNoMatch: "No existing report matches that request yet. Try “sales trend”, “customer ranking”, or “inventory value”.",
         expandSection: "Expand",
         collapseSection: "Collapse",
         backToLaunchpad: "Back to Overview",
@@ -1464,6 +1934,104 @@
         userSaved: "Staff profile saved.",
         userDisabled: "Staff disabled.",
         userEnabled: "Staff enabled.",
+        salesAnalyticsTitle: "Sales Analytics",
+        salesAnalyticsSub: "Analyze confirmed-order sales, customers, products, channels, and estimated gross profit.",
+        salesAnalyticsReady: "Confirmed orders for the current month are shown by default.",
+        salesAnalyticsLoading: "Loading sales analytics...",
+        salesAnalyticsLoaded: "Analyzed {orders} orders and {lines} sales lines.",
+        salesAnalyticsNoData: "No confirmed sales orders match the current filters.",
+        salesAnalyticsFailed: "Failed to load sales analytics: {message}",
+        exportCurrentReport: "Export Current Report",
+        analyticsDateFrom: "Order Date From",
+        analyticsDateTo: "Order Date To",
+        analyticsChannel: "Sales Channel",
+        analyticsAllChannels: "All Channels",
+        analyticsPos: "POS Sales",
+        analyticsRegular: "Regular Sales",
+        analyticsAllCustomers: "All Customers",
+        analyticsAllProducts: "All Products",
+        analyticsAllCategories: "All Categories",
+        analyticsAllPayments: "All Payment Methods",
+        analyticsSalesAmount: "Sales Amount",
+        analyticsOrderCount: "Orders",
+        analyticsSalesQuantity: "Sales Quantity",
+        analyticsAverageOrder: "Average Order Value",
+        analyticsEstimatedProfit: "Estimated Gross Profit",
+        analyticsGrossMargin: "Gross Margin",
+        analyticsTrend: "Sales Trend",
+        analyticsProductRanking: "Product Ranking",
+        analyticsCustomerRanking: "Customer Ranking",
+        analyticsCategoryBreakdown: "Category Breakdown",
+        analyticsPaymentBreakdown: "Payment Methods",
+        analyticsChannelComparison: "Channel Comparison",
+        analyticsProfitAnalysis: "Gross Profit Estimate",
+        analyticsSalesShare: "Sales Share",
+        analyticsLatestOrder: "Latest Purchase Date",
+        analyticsNetSales: "Net Sales",
+        analyticsCurrentCost: "Current Cost",
+        analyticsEstimatedGrossProfit: "Estimated Gross Profit",
+        analyticsCurrentCostNote: "Gross profit uses each product's current cost price and is not historical actual cost.",
+        analyticsZeroCostWarning: "Products with a current cost price of 0: {count}. Review the gross profit result.",
+        analyticsUnassigned: "Unassigned",
+        analyticsPosCustomer: "POS Walk-in",
+        analyticsCsvReady: "Current report exported.",
+        purchaseInventoryAnalyticsTitle: "Purchase & Inventory Analytics",
+        purchaseInventoryAnalyticsSub: "Analyze purchasing, suppliers, receipt fulfillment, inventory value, and stock flow.",
+        purchaseInventoryReady: "Confirmed purchases for the current month and the current inventory snapshot are shown by default.",
+        purchaseInventoryLoading: "Loading purchase and inventory analytics...",
+        purchaseInventoryLoaded: "Analyzed {orders} purchase orders, {lines} purchase lines, {products} products, and {movements} stock movements.",
+        purchaseInventoryNoData: "No data matches the current filters.",
+        purchaseInventoryFailed: "Failed to load purchase and inventory analytics: {message}",
+        piPurchaseTrend: "Purchase Trend",
+        piSupplierAnalysis: "Supplier Analysis",
+        piProductRanking: "Product / Category Ranking",
+        piFulfillment: "Purchase Fulfillment",
+        piInventoryValue: "Inventory Value & Structure",
+        piMovementTrend: "Inventory Flow Trend",
+        piPurchaseAmount: "Purchase Amount",
+        piPurchaseOrders: "Purchase Orders",
+        piSupplierCount: "Suppliers",
+        piReceivedValue: "Received Value",
+        piPendingValue: "Pending Receipt Value",
+        piReceiptRate: "Value Receipt Rate",
+        piSupplierAll: "All Suppliers",
+        piMovementAll: "All Movement Types",
+        piGroupBy: "Group By",
+        piGroupDay: "Day",
+        piGroupWeek: "Week",
+        piGroupMonth: "Month",
+        piRankingView: "Ranking View",
+        piByProduct: "Product",
+        piByCategory: "Category",
+        piPeriod: "Period",
+        piDistinctProducts: "Products",
+        piAverageOrder: "Average Order Value",
+        piAverageUnitCost: "Weighted Average Purchase Price",
+        piPurchaseShare: "Purchase Share",
+        piOpenLines: "Open Receipt Lines",
+        piOverdueLines: "Overdue Lines",
+        piOverdueValue: "Overdue Value",
+        piEarliestDue: "Earliest Due Date",
+        piOverdue: "Overdue",
+        piDueToday: "Due Today",
+        piDueOneToSeven: "Next 1–7 Days",
+        piDueEightToThirty: "Next 8–30 Days",
+        piDueLater: "31+ Days",
+        piDueMissing: "No Due Date",
+        piStockValue: "Inventory Cost Value",
+        piRetailValue: "Inventory Sales Value",
+        piCurrentCostEstimate: "Inventory value uses each product's current cost price and is not historical actual cost.",
+        piZeroCostWarning: "Products with stock and a current cost price of 0: {count}. Review the valuation.",
+        piMovementCount: "Movement Transactions",
+        piInboundQuantity: "Inbound Quantity",
+        piOutboundQuantity: "Outbound Quantity",
+        piNetQuantity: "Net Quantity Change",
+        piMovementUnitNote: "Different units are not combined; quantities are summarized only by product and unit.",
+        piViewDetails: "View Details",
+        piCurrentSnapshot: "Current Inventory Snapshot",
+        piExported: "Current purchase and inventory report exported.",
+        orderDateFrom: "Order Date From",
+        orderDateTo: "Order Date To",
         businessFeature: "Business Feature",
         chooseFeature: "Choose a feature.",
         userChip: "{name} · {role}",
@@ -1546,6 +2114,12 @@
       document.querySelectorAll("[data-i18n]").forEach((element) => {
         element.textContent = t(element.dataset.i18n);
       });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+        element.placeholder = t(element.dataset.i18nPlaceholder);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+        element.setAttribute("aria-label", t(element.dataset.i18nAriaLabel));
+      });
       document.getElementById("authStatus").textContent = t("authStatus");
       const languageSelect = document.getElementById("languageSelect");
       if (languageSelect) languageSelect.value = currentLanguage;
@@ -1558,7 +2132,8 @@
         loginHints[1].textContent = isPreview ? t("loginAuthHint") : t("loginRoleHint");
       }
       if (activeRole) {
-        renderLaunchpad(activeRole);
+        renderLaunchpad(activeRole, { refreshMetrics: false });
+        window.xmbRefreshLocalizedFeature?.();
       }
       updateSectionToggleLabels();
     }
@@ -1587,11 +2162,6 @@
     }
 
     const tiles = [
-      { section: "overview", title: { "zh-CN": "今日销售额", en: "Today Sales Amount" }, sub: { "zh-CN": "今日已收款销售额", en: "Sales collected today" }, roles: ["owner", "manager"], metric: "2,860", unit: "", trend: { "zh-CN": "比昨日 +12%", en: "+12% vs yesterday" } },
-      { section: "overview", title: { "zh-CN": "今日订单数", en: "Today Sales Orders" }, sub: { "zh-CN": "今日创建的收银销售订单", en: "POS orders created today" }, roles: ["owner", "manager"], metric: "0", dynamicMetric: "todayPosOrderCount", unit: { "zh-CN": "单", en: "orders" }, trend: { "zh-CN": "营业中", en: "Open" } },
-      { section: "overview", title: { "zh-CN": "待发货订单", en: "Pending Shipment" }, sub: { "zh-CN": "等待发货的订单行", en: "Orders waiting to ship" }, roles: ["owner", "manager"], metric: "8", unit: { "zh-CN": "行", en: "lines" }, trend: { "zh-CN": "2 行超时", en: "2 lines overdue" }, warn: true },
-      { section: "overview", title: { "zh-CN": "销售趋势", en: "Sales Trend" }, sub: { "zh-CN": "最近 4 天", en: "Last 4 Days" }, roles: ["owner", "manager"], table: [["Mon", "1,920"], ["Tue", "2,140"], ["Wed", "2,520"], [{ "zh-CN": "Today", en: "Today" }, "2,860"]], trend: { "zh-CN": "20 分钟前", en: "20 min. ago" } },
-
       { section: "daily", title: { "zh-CN": "收银销售", en: "POS Checkout" }, sub: { "zh-CN": "收银台销售", en: "Cashier sales" }, roles: ["owner", "manager", "cashier"], icon: "$", action: "posCheckout" },
       { section: "daily", title: { "zh-CN": "销售订单", en: "Sales Orders" }, sub: { "zh-CN": "管理销售订单", en: "Manage sales orders" }, dynamicSub: "activeSalesOrderDueLines", dynamicSubText: { "zh-CN": "待发货订单项", en: "Pending shipment items" }, roles: ["owner", "manager", "cashier"], metric: "0", dynamicMetric: "activeSalesOrderCount", dynamicTrend: "activeSalesOrderDueLines", unit: { "zh-CN": "行", en: "lines" }, action: "salesOrders" },
       { section: "daily", title: { "zh-CN": "销售明细发货", en: "Ship Sales Items" }, sub: { "zh-CN": "发货订单明细", en: "Ship order lines" }, roles: ["owner", "manager", "cashier"], metric: "8", unit: { "zh-CN": "待处理", en: "pending" } },
@@ -1607,12 +2177,13 @@
       { section: "manage", title: { "zh-CN": "商品管理", en: "Product Management" }, sub: { "zh-CN": "商品主数据", en: "Product master data" }, roles: ["owner", "manager"], icon: "P", action: "productManage" },
       { section: "manage", title: { "zh-CN": "客户管理", en: "Customer Management" }, sub: { "zh-CN": "客户主数据", en: "Customer master data" }, roles: ["owner", "manager"], icon: "C" },
       { section: "manage", title: { "zh-CN": "员工管理", en: "Staff Management" }, sub: { "zh-CN": "用户角色", en: "User roles" }, roles: ["owner"], metric: "3", unit: { "zh-CN": "人", en: "users" }, action: "userManage" },
-      { section: "manage", title: { "zh-CN": "报表中心", en: "Reports" }, sub: { "zh-CN": "报表查询中心", en: "Reporting center" }, roles: ["owner", "manager"], icon: "R" },
+      { section: "manage", title: { "zh-CN": "销售分析", en: "Sales Analytics" }, sub: { "zh-CN": "销售、客户、商品和毛利报表", en: "Sales, customer, product, and profit reports" }, roles: ["owner", "manager"], icon: "A", action: "salesAnalytics" },
+      { section: "manage", title: { "zh-CN": "采购与库存分析", en: "Purchase & Inventory Analytics" }, sub: { "zh-CN": "采购、供应商、履约和库存报表", en: "Purchase, supplier, fulfillment, and inventory reports" }, roles: ["owner", "manager"], icon: "I", action: "purchaseInventoryAnalytics" },
+      { section: "manage", title: { "zh-CN": "智能查询", en: "Smart Query" }, sub: { "zh-CN": "用自然语言查找现有报表", en: "Find existing reports in plain language" }, roles: ["owner", "manager"], icon: "Q", action: "smartQuery" },
       { section: "manage", title: { "zh-CN": "系统设置", en: "Settings" }, sub: { "zh-CN": "系统参数设置", en: "System settings" }, roles: ["owner"], icon: "G" },
     ];
 
     const sectionTargets = {
-      overview: document.getElementById("overviewTiles"),
       daily: document.getElementById("dailyTiles"),
       purchase: document.getElementById("purchaseTiles"),
       manage: document.getElementById("manageTiles"),
@@ -1860,11 +2431,12 @@
         ? String(dashboardMetrics[tile.dynamicMetric])
         : tile.metric;
 
+      const smartQueryIcon = `<div class="tile-icon smart-query-tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8c.55 4.85 2.35 6.65 7.2 7.2-4.85.55-6.65 2.35-7.2 7.2-.55-4.85-2.35-6.65-7.2-7.2 4.85-.55 6.65-2.35 7.2-7.2Z" fill="currentColor"/><circle cx="19" cy="18.5" r="2" fill="currentColor" opacity=".7"/></svg></div>`;
       const body = tile.table
         ? `<table class="mini-table">${tile.table.map((row) => `<tr><td>${localText(row[0])}</td><td>${localText(row[1])}</td></tr>`).join("")}</table>`
         : metric
           ? `<div class="metric ${tile.warn ? "warn" : ""}"><strong>${metric}</strong><span>${localText(tile.unit) || ""}</span></div>`
-          : `<div class="tile-icon">${tile.icon || "•"}</div>`;
+          : tile.action === "smartQuery" ? smartQueryIcon : `<div class="tile-icon">${tile.icon || "•"}</div>`;
 
       const dynamicTrendCount = tile.dynamicTrend ? Number(dashboardMetrics[tile.dynamicTrend] || 0) : 0;
       const dynamicTrend = dynamicTrendCount > 0
@@ -2040,6 +2612,11 @@
       const featureSubtitle = document.getElementById("featureSubtitle");
       const featureActions = document.getElementById("featureActions");
       const featureBody = document.getElementById("featureBody");
+      const smartQueryModal = document.getElementById("smartQueryModal");
+      const smartQueryForm = document.getElementById("smartQueryForm");
+      const smartQueryInput = document.getElementById("smartQueryInput");
+      const smartQueryStatus = document.getElementById("smartQueryStatus");
+      let smartQueryReturnFocus = null;
       let productRows = [];
       let inventoryRows = [];
       let stockMovementRows = [];
@@ -2056,6 +2633,18 @@
       let salesOrderLines = [];
       let userRows = [];
       let currentFeatureAction = "";
+      let analyticsDataset = { orders: [], lines: [] };
+      let analyticsFiltered = { orders: [], lines: [] };
+      let analyticsActiveTab = "trend";
+      let analyticsFilters = null;
+      let analyticsReportRows = [];
+      let purchaseInventoryDataset = { orders: [], lines: [], products: [], inventory: [], movements: [] };
+      let purchaseInventoryActiveTab = "purchaseTrend";
+      let purchaseInventoryFilters = null;
+      let purchaseInventoryReportRows = [];
+      let purchaseInventoryGroupBy = "day";
+      let purchaseInventoryRankingView = "product";
+      let pendingFeatureFilters = null;
 
       const featureMeta = {
         posCheckout: ["posCheckoutTitle", "posCheckoutSub"],
@@ -2067,6 +2656,8 @@
         inventoryBalance: ["inventoryBalanceTitle", "inventoryBalanceSub"],
         stockMovements: ["stockMovementsTitle", "stockMovementsSub"],
         userManage: ["userManageTitle", "userManageSub"],
+        salesAnalytics: ["salesAnalyticsTitle", "salesAnalyticsSub"],
+        purchaseInventoryAnalytics: ["purchaseInventoryAnalyticsTitle", "purchaseInventoryAnalyticsSub"],
       };
 
       function escapeHtml(value) {
@@ -2851,6 +3442,10 @@
       }
 
       function openFeature(action) {
+        if (action === "smartQuery") {
+          openSmartQuery();
+          return;
+        }
         const meta = featureMeta[action];
         if (!meta) return;
 
@@ -2870,6 +3465,8 @@
         if (action === "inventoryBalance") renderInventoryFeature();
         if (action === "stockMovements") renderStockMovementsFeature();
         if (action === "userManage") renderUserFeature();
+        if (action === "salesAnalytics") renderSalesAnalyticsFeature();
+        if (action === "purchaseInventoryAnalytics") renderPurchaseInventoryAnalyticsFeature();
 
         document.querySelector(".page-heading").scrollIntoView({ behavior: "smooth", block: "start" });
       }
@@ -2878,6 +3475,1189 @@
         workspace.hidden = true;
         currentFeatureAction = "";
         document.body.classList.remove("feature-open");
+      }
+
+      function openSmartQuery() {
+        smartQueryReturnFocus = document.activeElement;
+        smartQueryModal.hidden = false;
+        document.body.classList.add("smart-query-open");
+        smartQueryInput.value = "";
+        smartQueryStatus.textContent = t("smartQueryHint");
+        smartQueryStatus.classList.remove("error");
+        requestAnimationFrame(() => smartQueryInput.focus());
+      }
+
+      function closeSmartQuery() {
+        smartQueryModal.hidden = true;
+        document.body.classList.remove("smart-query-open");
+        if (smartQueryReturnFocus?.focus) smartQueryReturnFocus.focus();
+        smartQueryReturnFocus = null;
+      }
+
+      function smartQueryDestination(value) {
+        const query = String(value || "").trim().toLowerCase();
+        const compact = query.replace(/[\s\p{P}\p{S}]+/gu, "");
+        const matches = (patterns) => patterns.some((pattern) => {
+          const normalized = pattern.toLowerCase();
+          return query.includes(normalized) || compact.includes(normalized.replace(/[\s\p{P}\p{S}]+/gu, ""));
+        });
+        const rules = [
+          { action: "purchaseInventoryAnalytics", tab: "inventoryValue", patterns: ["库存价值", "库存估值", "库存结构", "库存金额", "stock value", "inventory value", "inventory structure"] },
+          { action: "purchaseInventoryAnalytics", tab: "movementTrend", patterns: ["库存收发", "收发趋势", "出入库趋势", "库存流水", "库存移动", "stock movement", "inventory movement", "stock flow"] },
+          { action: "purchaseInventoryAnalytics", tab: "fulfillment", patterns: ["采购履约", "待收货", "逾期采购", "到货情况", "收货率", "purchase fulfillment", "pending receipt", "overdue purchase"] },
+          { action: "purchaseInventoryAnalytics", tab: "suppliers", patterns: ["供应商分析", "供应商排行", "供应商采购", "supplier analysis", "supplier ranking", "supplier report"] },
+          { action: "purchaseInventoryAnalytics", tab: "purchaseRanking", patterns: ["采购商品", "商品采购", "采购排行", "采购分类", "purchase product", "purchase ranking", "purchase category"] },
+          { action: "purchaseInventoryAnalytics", tab: "purchaseTrend", patterns: ["采购趋势", "采购走势", "采购金额", "采购分析", "采购报表", "purchase trend", "purchase analytics", "purchase report"] },
+          { action: "salesAnalytics", tab: "profit", patterns: ["毛利", "销售利润", "利润率", "gross profit", "sales profit", "gross margin"] },
+          { action: "salesAnalytics", tab: "payments", patterns: ["付款方式", "支付方式", "收款方式", "payment method", "payment report"] },
+          { action: "salesAnalytics", tab: "channels", patterns: ["渠道对比", "销售渠道", "pos对比", "pos 销售", "channel comparison", "sales channel"] },
+          { action: "salesAnalytics", tab: "customers", patterns: ["客户排行", "客户销售", "客户分析", "customer ranking", "customer sales", "customer analysis"] },
+          { action: "salesAnalytics", tab: "categories", patterns: ["分类构成", "销售分类", "分类销售", "category breakdown", "sales category"] },
+          { action: "salesAnalytics", tab: "products", patterns: ["商品排行", "销售商品", "商品销售", "热销", "畅销", "sku排行", "product ranking", "product sales", "best seller"] },
+          { action: "salesAnalytics", tab: "trend", patterns: ["销售趋势", "销售走势", "每日销售", "销售额趋势", "sales trend", "daily sales"] },
+        ];
+        const matched = rules.find((rule) => matches(rule.patterns));
+        if (matched) return { ...matched, query };
+        if (matches(["库存", "inventory", "stock"])) return { action: "purchaseInventoryAnalytics", tab: "inventoryValue", query };
+        if (matches(["采购", "purchase", "purchasing"])) return { action: "purchaseInventoryAnalytics", tab: "purchaseTrend", query };
+        if (matches(["销售", "sales"])) return { action: "salesAnalytics", tab: "trend", query };
+        return null;
+      }
+
+      function runSmartQuery(value) {
+        if (!String(value || "").trim()) {
+          smartQueryStatus.textContent = t("smartQueryEmpty");
+          smartQueryStatus.classList.add("error");
+          smartQueryInput.focus();
+          return;
+        }
+        const destination = smartQueryDestination(value);
+        if (!destination) {
+          smartQueryStatus.textContent = t("smartQueryNoMatch");
+          smartQueryStatus.classList.add("error");
+          return;
+        }
+        if (destination.action === "salesAnalytics") {
+          analyticsActiveTab = destination.tab;
+        } else {
+          purchaseInventoryActiveTab = destination.tab;
+          if (destination.tab === "purchaseRanking") {
+            purchaseInventoryRankingView = /分类|category/.test(destination.query) ? "category" : "product";
+          }
+        }
+        closeSmartQuery();
+        openFeature(destination.action);
+      }
+
+      function takePendingFeatureFilters(action) {
+        if (pendingFeatureFilters?.action !== action) return null;
+        const filters = { ...pendingFeatureFilters };
+        pendingFeatureFilters = null;
+        return filters;
+      }
+
+      window.xmbRefreshLocalizedFeature = () => {
+        if (!["salesAnalytics", "purchaseInventoryAnalytics"].includes(currentFeatureAction)) return;
+        document.body.classList.add("feature-open");
+        workspace.hidden = false;
+        const isSalesAnalytics = currentFeatureAction === "salesAnalytics";
+        featureTitle.textContent = t(isSalesAnalytics ? "salesAnalyticsTitle" : "purchaseInventoryAnalyticsTitle");
+        featureSubtitle.textContent = t(isSalesAnalytics ? "salesAnalyticsSub" : "purchaseInventoryAnalyticsSub");
+        featureActions.innerHTML = `<button class="tool-btn" type="button" data-close-feature>${t("backToLaunchpad")}</button>`;
+        if (isSalesAnalytics) renderSalesAnalyticsFeature({ preserve: true });
+        else renderPurchaseInventoryAnalyticsFeature({ preserve: true });
+      };
+
+      const analyticsTabs = [
+        ["trend", "analyticsTrend"],
+        ["products", "analyticsProductRanking"],
+        ["customers", "analyticsCustomerRanking"],
+        ["categories", "analyticsCategoryBreakdown"],
+        ["payments", "analyticsPaymentBreakdown"],
+        ["channels", "analyticsChannelComparison"],
+        ["profit", "analyticsProfitAnalysis"],
+      ];
+
+      function localDateText(date = new Date()) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      }
+
+      function defaultAnalyticsFilters() {
+        const now = new Date();
+        return {
+          fromDate: localDateText(new Date(now.getFullYear(), now.getMonth(), 1)),
+          toDate: localDateText(new Date(now.getFullYear(), now.getMonth() + 1, 0)),
+          customerId: "",
+          productId: "",
+          category: "",
+          paymentMethod: "",
+          channel: "",
+        };
+      }
+
+      function analyticsProductName(product = {}) {
+        return currentLanguage === "zh-CN"
+          ? product.zh_name || product.name || product.sku || t("analyticsUnassigned")
+          : product.name || product.zh_name || product.sku || t("analyticsUnassigned");
+      }
+
+      function analyticsCustomerName(customer = {}, customerId = "") {
+        if (customerId === posCustomerId) return t("analyticsPosCustomer");
+        return currentLanguage === "zh-CN"
+          ? customer.zh_name || customer.name || customerId || t("analyticsUnassigned")
+          : customer.name || customer.zh_name || customerId || t("analyticsUnassigned");
+      }
+
+      function analyticsNumber(value, decimals = 2) {
+        return Number(value || 0).toLocaleString(currentLanguage === "zh-CN" ? "zh-CN" : "en-US", {
+          minimumFractionDigits: decimals,
+          maximumFractionDigits: decimals,
+        });
+      }
+
+      function analyticsPercent(value) {
+        return `${analyticsNumber(Number(value || 0) * 100, 2)}%`;
+      }
+
+      function renderSalesAnalyticsFeature(options = {}) {
+        if (!options.preserve || !analyticsFilters) analyticsFilters = defaultAnalyticsFilters();
+        featureActions.insertAdjacentHTML("afterbegin", `
+          <button class="tool-btn" type="button" data-analytics-export>${t("exportCurrentReport")}</button>
+        `);
+        featureBody.innerHTML = `
+          <div class="form-panel analytics-filters">
+            <h3>${t("filterConditions")}</h3>
+            <div class="analytics-filter-grid">
+              <label>${t("analyticsDateFrom")}<input id="analyticsFromDate" type="date" value="${escapeHtml(analyticsFilters.fromDate)}"></label>
+              <label>${t("analyticsDateTo")}<input id="analyticsToDate" type="date" value="${escapeHtml(analyticsFilters.toDate)}"></label>
+              <label>${t("customer")}<select id="analyticsCustomer"><option value="">${t("analyticsAllCustomers")}</option></select></label>
+              <label>${t("productName")}<select id="analyticsProduct"><option value="">${t("analyticsAllProducts")}</option></select></label>
+              <label>${t("category")}<select id="analyticsCategory"><option value="">${t("analyticsAllCategories")}</option></select></label>
+              <label>${t("paymentMethod")}<select id="analyticsPayment"><option value="">${t("analyticsAllPayments")}</option></select></label>
+              <label>${t("analyticsChannel")}<select id="analyticsChannel">
+                <option value="">${t("analyticsAllChannels")}</option>
+                <option value="pos">${t("analyticsPos")}</option>
+                <option value="regular">${t("analyticsRegular")}</option>
+              </select></label>
+              <div class="analytics-filter-actions">
+                <button class="tool-btn primary" type="button" data-analytics-search>${t("search")}</button>
+                <button class="tool-btn" type="button" data-analytics-reset>${t("clearFilters")}</button>
+              </div>
+            </div>
+          </div>
+          <p class="status-line" id="featureStatus">${t("salesAnalyticsReady")}</p>
+          <div class="analytics-kpis" id="analyticsKpis"></div>
+          <div class="analytics-tabs" role="tablist">
+            ${analyticsTabs.map(([key, label]) => `<button class="analytics-tab ${key === analyticsActiveTab ? "active" : ""}" type="button" role="tab" data-analytics-tab="${key}">${t(label)}</button>`).join("")}
+          </div>
+          <p class="analytics-note" id="analyticsNote" hidden></p>
+          <div id="analyticsReport"></div>
+        `;
+
+        bindAnalyticsEvents();
+        populateAnalyticsFilterOptions();
+        if (options.preserve && analyticsDataset.orders.length) {
+          applyAnalyticsFilters();
+        } else {
+          loadSalesAnalytics();
+        }
+      }
+
+      function bindAnalyticsEvents() {
+        featureActions.querySelector("[data-analytics-export]")?.addEventListener("click", exportAnalyticsCsv);
+        featureBody.querySelector("[data-analytics-search]")?.addEventListener("click", () => {
+          analyticsFilters = readAnalyticsFilters();
+          loadSalesAnalytics();
+        });
+        featureBody.querySelector("[data-analytics-reset]")?.addEventListener("click", () => {
+          analyticsFilters = defaultAnalyticsFilters();
+          document.getElementById("analyticsFromDate").value = analyticsFilters.fromDate;
+          document.getElementById("analyticsToDate").value = analyticsFilters.toDate;
+          ["analyticsCustomer", "analyticsProduct", "analyticsCategory", "analyticsPayment", "analyticsChannel"].forEach((id) => {
+            const element = document.getElementById(id);
+            if (element) element.value = "";
+          });
+          loadSalesAnalytics();
+        });
+        featureBody.querySelectorAll("[data-analytics-tab]").forEach((button) => {
+          button.addEventListener("click", () => {
+            analyticsActiveTab = button.dataset.analyticsTab;
+            featureBody.querySelectorAll("[data-analytics-tab]").forEach((item) => item.classList.toggle("active", item === button));
+            renderAnalyticsReport();
+          });
+        });
+      }
+
+      function readAnalyticsFilters() {
+        return {
+          fromDate: document.getElementById("analyticsFromDate")?.value || "",
+          toDate: document.getElementById("analyticsToDate")?.value || "",
+          customerId: document.getElementById("analyticsCustomer")?.value || "",
+          productId: document.getElementById("analyticsProduct")?.value || "",
+          category: document.getElementById("analyticsCategory")?.value || "",
+          paymentMethod: document.getElementById("analyticsPayment")?.value || "",
+          channel: document.getElementById("analyticsChannel")?.value || "",
+        };
+      }
+
+      function setSelectOptions(elementId, options, placeholder, selected) {
+        const select = document.getElementById(elementId);
+        if (!select) return;
+        select.innerHTML = `<option value="">${escapeHtml(placeholder)}</option>${options.map((item) => `<option value="${escapeHtml(item.value)}">${escapeHtml(item.label)}</option>`).join("")}`;
+        select.value = selected || "";
+      }
+
+      function populateAnalyticsFilterOptions() {
+        const customerMap = new Map();
+        const productMap = new Map();
+        const categories = new Set();
+        const payments = new Set();
+        analyticsDataset.lines.forEach((line) => {
+          customerMap.set(line.customer_id || "", analyticsCustomerName(line.customer, line.customer_id));
+          productMap.set(line.product_id || "", `${line.product?.sku || ""} ${analyticsProductName(line.product)}`.trim());
+          if (line.category) categories.add(line.category);
+          if (line.payment_method) payments.add(line.payment_method);
+        });
+        setSelectOptions("analyticsCustomer", [...customerMap].filter(([value]) => value).map(([value, label]) => ({ value, label })).sort((a, b) => a.label.localeCompare(b.label)), t("analyticsAllCustomers"), analyticsFilters.customerId);
+        setSelectOptions("analyticsProduct", [...productMap].filter(([value]) => value).map(([value, label]) => ({ value, label })).sort((a, b) => a.label.localeCompare(b.label)), t("analyticsAllProducts"), analyticsFilters.productId);
+        setSelectOptions("analyticsCategory", [...categories].sort().map((value) => ({ value, label: value })), t("analyticsAllCategories"), analyticsFilters.category);
+        setSelectOptions("analyticsPayment", [...payments].sort().map((value) => ({ value, label: value })), t("analyticsAllPayments"), analyticsFilters.paymentMethod);
+        const channel = document.getElementById("analyticsChannel");
+        if (channel) channel.value = analyticsFilters.channel || "";
+      }
+
+      async function fetchAnalyticsPages(fetchPage, pageSize = 1000) {
+        const rows = [];
+        for (let from = 0; ; from += pageSize) {
+          const { data, error } = await fetchPage(from, from + pageSize - 1);
+          if (error) throw error;
+          const page = data || [];
+          rows.push(...page);
+          if (page.length < pageSize) break;
+        }
+        return rows;
+      }
+
+      function analyticsChunks(values, size = 100) {
+        const chunks = [];
+        for (let index = 0; index < values.length; index += size) chunks.push(values.slice(index, index + size));
+        return chunks;
+      }
+
+      async function fetchAnalyticsByIds(table, fields, idField, ids) {
+        if (!ids.length) return [];
+        const rows = [];
+        for (const idsChunk of analyticsChunks(ids)) {
+          const pageRows = await fetchAnalyticsPages((from, to) => getClient()
+            .from(table)
+            .select(fields)
+            .in(idField, idsChunk)
+            .order("id", { ascending: true })
+            .range(from, to));
+          rows.push(...pageRows);
+        }
+        return rows;
+      }
+
+      async function loadSalesAnalytics() {
+        try {
+          analyticsFilters = readAnalyticsFilters();
+          if (!analyticsFilters.fromDate || !analyticsFilters.toDate) throw new Error(`${t("analyticsDateFrom")} / ${t("analyticsDateTo")}`);
+          if (analyticsFilters.fromDate > analyticsFilters.toDate) throw new Error(`${t("analyticsDateFrom")} > ${t("analyticsDateTo")}`);
+          setFeatureMessage(t("salesAnalyticsLoading"));
+          const orders = await fetchAnalyticsPages((from, to) => getClient()
+            .from("sales_orders")
+            .select("id,order_no,customer_id,status,order_date,total_amount,payment_method")
+            .eq("status", "confirmed")
+            .gte("order_date", `${analyticsFilters.fromDate}T00:00:00`)
+            .lt("order_date", `${nextDateText(analyticsFilters.toDate)}T00:00:00`)
+            .order("order_date", { ascending: true })
+            .range(from, to));
+          const orderIds = orders.map((order) => order.id).filter(Boolean);
+          const items = await fetchAnalyticsByIds("sales_order_items", "id,sales_order_id,product_id,quantity,line_amount", "sales_order_id", orderIds);
+          const productIds = [...new Set(items.map((item) => item.product_id).filter(Boolean))];
+          const customerIds = [...new Set(orders.map((order) => order.customer_id).filter(Boolean))];
+          const [products, customers] = await Promise.all([
+            fetchAnalyticsByIds("products", "id,sku,name,zh_name,category,cost_price", "id", productIds),
+            fetchAnalyticsByIds("customers", "id,name,zh_name", "id", customerIds),
+          ]);
+          analyticsDataset = buildAnalyticsDataset(orders, items, products, customers);
+          populateAnalyticsFilterOptions();
+          applyAnalyticsFilters();
+          setFeatureMessage(t("salesAnalyticsLoaded", { orders: analyticsDataset.orders.length, lines: analyticsDataset.lines.length }));
+        } catch (error) {
+          analyticsDataset = { orders: [], lines: [] };
+          analyticsFiltered = { orders: [], lines: [] };
+          populateAnalyticsFilterOptions();
+          renderAnalyticsKpis();
+          renderAnalyticsReport();
+          setFeatureMessage(t("salesAnalyticsFailed", { message: error.message }), true);
+        }
+      }
+
+      function buildAnalyticsDataset(orders, items, products, customers) {
+        const productsById = new Map(products.map((item) => [item.id, item]));
+        const customersById = new Map(customers.map((item) => [item.id, item]));
+        const itemsByOrder = new Map();
+        items.forEach((item) => {
+          const orderItems = itemsByOrder.get(item.sales_order_id) || [];
+          orderItems.push(item);
+          itemsByOrder.set(item.sales_order_id, orderItems);
+        });
+        const lines = [];
+        orders.forEach((order) => {
+          const orderItems = itemsByOrder.get(order.id) || [];
+          const lineTotal = orderItems.reduce((sum, item) => sum + Number(item.line_amount || 0), 0);
+          const orderTotal = Number(order.total_amount || 0);
+          let allocated = 0;
+          orderItems.forEach((item, index) => {
+            const netSales = index === orderItems.length - 1
+              ? orderTotal - allocated
+              : lineTotal > 0 ? orderTotal * Number(item.line_amount || 0) / lineTotal : 0;
+            allocated += netSales;
+            const product = productsById.get(item.product_id) || {};
+            const quantity = Number(item.quantity || 0);
+            const currentCost = Number(product.cost_price || 0) * quantity;
+            lines.push({
+              ...item,
+              order,
+              product,
+              customer: customersById.get(order.customer_id) || {},
+              customer_id: order.customer_id || "",
+              product_id: item.product_id || "",
+              category: product.category || "",
+              payment_method: order.payment_method || "",
+              channel: order.customer_id === posCustomerId ? "pos" : "regular",
+              order_date: String(order.order_date || "").slice(0, 10),
+              quantity,
+              net_sales: netSales,
+              current_cost: currentCost,
+              estimated_profit: netSales - currentCost,
+            });
+          });
+        });
+        return { orders, lines };
+      }
+
+      function applyAnalyticsFilters() {
+        analyticsFilters = readAnalyticsFilters();
+        const lines = analyticsDataset.lines.filter((line) => {
+          if (analyticsFilters.customerId && line.customer_id !== analyticsFilters.customerId) return false;
+          if (analyticsFilters.productId && line.product_id !== analyticsFilters.productId) return false;
+          if (analyticsFilters.category && line.category !== analyticsFilters.category) return false;
+          if (analyticsFilters.paymentMethod && line.payment_method !== analyticsFilters.paymentMethod) return false;
+          if (analyticsFilters.channel && line.channel !== analyticsFilters.channel) return false;
+          return true;
+        });
+        const orderIds = new Set(lines.map((line) => line.order.id));
+        analyticsFiltered = { orders: analyticsDataset.orders.filter((order) => orderIds.has(order.id)), lines };
+        renderAnalyticsKpis();
+        renderAnalyticsReport();
+      }
+
+      function analyticsSummary(lines = analyticsFiltered.lines) {
+        const orderIds = new Set(lines.map((line) => line.order.id));
+        const sales = lines.reduce((sum, line) => sum + line.net_sales, 0);
+        const quantity = lines.reduce((sum, line) => sum + line.quantity, 0);
+        const profit = lines.reduce((sum, line) => sum + line.estimated_profit, 0);
+        return {
+          sales,
+          quantity,
+          profit,
+          orders: orderIds.size,
+          average: orderIds.size ? sales / orderIds.size : 0,
+          margin: sales ? profit / sales : 0,
+        };
+      }
+
+      function renderAnalyticsKpis() {
+        const container = document.getElementById("analyticsKpis");
+        if (!container) return;
+        const summary = analyticsSummary();
+        const values = [
+          ["analyticsSalesAmount", analyticsNumber(summary.sales)],
+          ["analyticsOrderCount", analyticsNumber(summary.orders, 0)],
+          ["analyticsSalesQuantity", analyticsNumber(summary.quantity, 3)],
+          ["analyticsAverageOrder", analyticsNumber(summary.average)],
+          ["analyticsEstimatedProfit", analyticsNumber(summary.profit)],
+          ["analyticsGrossMargin", analyticsPercent(summary.margin)],
+        ];
+        container.innerHTML = values.map(([label, value]) => `<div class="analytics-kpi"><span>${t(label)}</span><strong>${value}</strong></div>`).join("");
+      }
+
+      function groupAnalyticsRows(keyFn) {
+        const groups = new Map();
+        analyticsFiltered.lines.forEach((line) => {
+          const key = keyFn(line);
+          const group = groups.get(key) || { key, lines: [] };
+          group.lines.push(line);
+          groups.set(key, group);
+        });
+        return [...groups.values()];
+      }
+
+      function buildAnalyticsReportRows() {
+        const totalSales = analyticsSummary().sales;
+        if (analyticsActiveTab === "trend") {
+          return groupAnalyticsRows((line) => line.order_date).map((group) => {
+            const summary = analyticsSummary(group.lines);
+            return { date: group.key, orders: summary.orders, quantity: summary.quantity, sales: summary.sales, average: summary.average, profit: summary.profit };
+          }).sort((a, b) => a.date.localeCompare(b.date));
+        }
+        if (analyticsActiveTab === "products" || analyticsActiveTab === "profit") {
+          return groupAnalyticsRows((line) => line.product_id || `missing:${line.product?.sku || ""}`).map((group) => {
+            const first = group.lines[0];
+            const summary = analyticsSummary(group.lines);
+            return {
+              sku: first.product?.sku || t("analyticsUnassigned"),
+              name: analyticsProductName(first.product),
+              category: first.category || t("analyticsUnassigned"),
+              quantity: summary.quantity,
+              sales: summary.sales,
+              share: totalSales ? summary.sales / totalSales : 0,
+              cost: group.lines.reduce((sum, line) => sum + line.current_cost, 0),
+              profit: summary.profit,
+              margin: summary.margin,
+            };
+          }).sort((a, b) => (analyticsActiveTab === "profit" ? b.profit - a.profit : b.sales - a.sales));
+        }
+        if (analyticsActiveTab === "customers") {
+          return groupAnalyticsRows((line) => line.customer_id || "missing").map((group) => {
+            const first = group.lines[0];
+            const summary = analyticsSummary(group.lines);
+            return {
+              customer: analyticsCustomerName(first.customer, first.customer_id),
+              orders: summary.orders,
+              sales: summary.sales,
+              average: summary.average,
+              latest: group.lines.reduce((latest, line) => line.order_date > latest ? line.order_date : latest, ""),
+            };
+          }).sort((a, b) => b.sales - a.sales);
+        }
+        if (analyticsActiveTab === "categories") {
+          return groupAnalyticsRows((line) => line.category || "missing").map((group) => {
+            const summary = analyticsSummary(group.lines);
+            return { category: group.key === "missing" ? t("analyticsUnassigned") : group.key, quantity: summary.quantity, sales: summary.sales, share: totalSales ? summary.sales / totalSales : 0 };
+          }).sort((a, b) => b.sales - a.sales);
+        }
+        if (analyticsActiveTab === "payments") {
+          return groupAnalyticsRows((line) => line.payment_method || "missing").map((group) => {
+            const summary = analyticsSummary(group.lines);
+            return { payment: group.key === "missing" ? t("analyticsUnassigned") : group.key, orders: summary.orders, sales: summary.sales, share: totalSales ? summary.sales / totalSales : 0 };
+          }).sort((a, b) => b.sales - a.sales);
+        }
+        return groupAnalyticsRows((line) => line.channel).map((group) => {
+          const summary = analyticsSummary(group.lines);
+          return { channel: group.key === "pos" ? t("analyticsPos") : t("analyticsRegular"), orders: summary.orders, quantity: summary.quantity, sales: summary.sales, average: summary.average };
+        }).sort((a, b) => b.sales - a.sales);
+      }
+
+      function analyticsColumns() {
+        const columns = {
+          trend: [["date", "orderDate", "text"], ["orders", "analyticsOrderCount", "integer"], ["quantity", "analyticsSalesQuantity", "quantity"], ["sales", "analyticsSalesAmount", "money"], ["average", "analyticsAverageOrder", "money"], ["profit", "analyticsEstimatedProfit", "money"]],
+          products: [["sku", "sku", "text"], ["name", "productName", "text"], ["category", "category", "text"], ["quantity", "analyticsSalesQuantity", "quantity"], ["sales", "analyticsSalesAmount", "money"], ["share", "analyticsSalesShare", "percent"]],
+          customers: [["customer", "customer", "text"], ["orders", "analyticsOrderCount", "integer"], ["sales", "analyticsSalesAmount", "money"], ["average", "analyticsAverageOrder", "money"], ["latest", "analyticsLatestOrder", "text"]],
+          categories: [["category", "category", "text"], ["quantity", "analyticsSalesQuantity", "quantity"], ["sales", "analyticsSalesAmount", "money"], ["share", "analyticsSalesShare", "percent"]],
+          payments: [["payment", "paymentMethod", "text"], ["orders", "analyticsOrderCount", "integer"], ["sales", "analyticsSalesAmount", "money"], ["share", "analyticsSalesShare", "percent"]],
+          channels: [["channel", "analyticsChannel", "text"], ["orders", "analyticsOrderCount", "integer"], ["quantity", "analyticsSalesQuantity", "quantity"], ["sales", "analyticsSalesAmount", "money"], ["average", "analyticsAverageOrder", "money"]],
+          profit: [["sku", "sku", "text"], ["name", "productName", "text"], ["sales", "analyticsNetSales", "money"], ["cost", "analyticsCurrentCost", "money"], ["profit", "analyticsEstimatedGrossProfit", "money"], ["margin", "analyticsGrossMargin", "percent"]],
+        };
+        return columns[analyticsActiveTab] || columns.trend;
+      }
+
+      function formatAnalyticsCell(value, type) {
+        if (type === "money") return analyticsNumber(value);
+        if (type === "quantity") return analyticsNumber(value, 3);
+        if (type === "integer") return analyticsNumber(value, 0);
+        if (type === "percent") return analyticsPercent(value);
+        return value ?? "";
+      }
+
+      function renderAnalyticsReport() {
+        const container = document.getElementById("analyticsReport");
+        const note = document.getElementById("analyticsNote");
+        if (!container || !note) return;
+        analyticsReportRows = buildAnalyticsReportRows();
+        const zeroCostProducts = new Set(analyticsFiltered.lines.filter((line) => Number(line.product?.cost_price || 0) === 0).map((line) => line.product_id || line.product?.sku)).size;
+        const showProfitNote = analyticsActiveTab === "profit";
+        note.hidden = !showProfitNote;
+        note.textContent = showProfitNote
+          ? `${t("analyticsCurrentCostNote")}${zeroCostProducts ? ` ${t("analyticsZeroCostWarning", { count: zeroCostProducts })}` : ""}`
+          : "";
+        if (!analyticsReportRows.length) {
+          container.innerHTML = `<div class="analytics-empty">${t("salesAnalyticsNoData")}</div>`;
+          return;
+        }
+        const columns = analyticsColumns();
+        const maxSales = Math.max(...analyticsReportRows.map((row) => Number(row.sales || 0)), 0);
+        const chartRows = analyticsReportRows.slice(0, 12).map((row) => {
+          const label = row.date || row.name || row.customer || row.category || row.payment || row.channel || row.sku;
+          const width = maxSales > 0 ? Math.max(1, Number(row.sales || 0) / maxSales * 100) : 0;
+          return `<div class="analytics-bar-row"><span>${escapeHtml(label)}</span><div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:${width}%"></div></div><strong>${analyticsNumber(row.sales)}</strong></div>`;
+        }).join("");
+        container.innerHTML = `
+          <div class="analytics-chart">${chartRows}</div>
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead><tr>${columns.map(([, label]) => `<th>${t(label)}</th>`).join("")}</tr></thead>
+              <tbody>${analyticsReportRows.map((row) => `<tr>${columns.map(([key,, type]) => `<td>${escapeHtml(formatAnalyticsCell(row[key], type))}</td>`).join("")}</tr>`).join("")}</tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      function csvCell(value) {
+        const text = String(value ?? "");
+        return /[",\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
+      }
+
+      function exportAnalyticsCsv() {
+        if (!analyticsReportRows.length) return;
+        const columns = analyticsColumns();
+        const rows = [
+          columns.map(([, label]) => csvCell(t(label))).join(","),
+          ...analyticsReportRows.map((row) => columns.map(([key]) => csvCell(row[key])).join(",")),
+        ];
+        const blob = new Blob(["\uFEFF", rows.join("\r\n")], { type: "text/csv;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${analyticsActiveTab}_${analyticsFilters.fromDate}_${analyticsFilters.toDate}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        setFeatureMessage(t("analyticsCsvReady"));
+      }
+
+      const purchaseInventoryTabs = [
+        ["purchaseTrend", "piPurchaseTrend"],
+        ["suppliers", "piSupplierAnalysis"],
+        ["purchaseRanking", "piProductRanking"],
+        ["fulfillment", "piFulfillment"],
+        ["inventoryValue", "piInventoryValue"],
+        ["movementTrend", "piMovementTrend"],
+      ];
+
+      function defaultPurchaseInventoryFilters() {
+        const now = new Date();
+        return {
+          fromDate: localDateText(new Date(now.getFullYear(), now.getMonth(), 1)),
+          toDate: localDateText(new Date(now.getFullYear(), now.getMonth() + 1, 0)),
+          supplierId: "",
+          productId: "",
+          category: "",
+          movementType: "",
+        };
+      }
+
+      function piSupplierName(supplier = {}, supplierId = "") {
+        return currentLanguage === "zh-CN"
+          ? supplier.zh_name || supplier.name || supplierId || t("analyticsUnassigned")
+          : supplier.name || supplier.zh_name || supplierId || t("analyticsUnassigned");
+      }
+
+      function renderPurchaseInventoryAnalyticsFeature(options = {}) {
+        if (!options.preserve || !purchaseInventoryFilters) purchaseInventoryFilters = defaultPurchaseInventoryFilters();
+        featureTitle.textContent = t("purchaseInventoryAnalyticsTitle");
+        featureSubtitle.textContent = t("purchaseInventoryAnalyticsSub");
+        featureActions.innerHTML = `
+          <button class="tool-btn" type="button" data-pi-export>${t("exportCurrentReport")}</button>
+          <button class="tool-btn" type="button" data-close-feature>${t("backToLaunchpad")}</button>
+        `;
+        featureBody.innerHTML = `
+          <div class="form-panel analytics-filters">
+            <h3>${t("filterConditions")}</h3>
+            <div class="analytics-filter-grid">
+              <label id="piFromField">${t("orderDateFrom")}<input id="piFromDate" type="date" value="${escapeHtml(purchaseInventoryFilters.fromDate)}"></label>
+              <label id="piToField">${t("orderDateTo")}<input id="piToDate" type="date" value="${escapeHtml(purchaseInventoryFilters.toDate)}"></label>
+              <label id="piSupplierField">${t("supplier")}<select id="piSupplier"><option value="">${t("piSupplierAll")}</option></select></label>
+              <label>${t("productName")}<select id="piProduct"><option value="">${t("analyticsAllProducts")}</option></select></label>
+              <label>${t("category")}<select id="piCategory"><option value="">${t("analyticsAllCategories")}</option></select></label>
+              <label id="piMovementField">${t("movementType")}<select id="piMovementType">
+                <option value="">${t("piMovementAll")}</option>
+                <option value="purchase_in">${t("movementPurchaseIn")}</option>
+                <option value="101">${t("movementPurchaseOrderReceipt")}</option>
+                <option value="501">${t("movementOtherReceipt")}</option>
+                <option value="sale_out">${t("movementSaleOut")}</option>
+                <option value="601">${t("movementSalesOrderShipment")}</option>
+                <option value="603">${t("movementPosShipment")}</option>
+                <option value="adjustment">${t("movementAdjustment")}</option>
+                <option value="return_in">${t("movementReturnIn")}</option>
+                <option value="return_out">${t("movementReturnOut")}</option>
+              </select></label>
+              <label id="piGroupField">${t("piGroupBy")}<select id="piGroupBy">
+                <option value="day">${t("piGroupDay")}</option>
+                <option value="week">${t("piGroupWeek")}</option>
+                <option value="month">${t("piGroupMonth")}</option>
+              </select></label>
+              <label id="piRankingField">${t("piRankingView")}<select id="piRankingView">
+                <option value="product">${t("piByProduct")}</option>
+                <option value="category">${t("piByCategory")}</option>
+              </select></label>
+              <div class="analytics-filter-actions">
+                <button class="tool-btn primary" type="button" data-pi-search>${t("search")}</button>
+                <button class="tool-btn" type="button" data-pi-reset>${t("clearFilters")}</button>
+              </div>
+            </div>
+          </div>
+          <p class="status-line" id="featureStatus">${t("purchaseInventoryReady")}</p>
+          <div class="analytics-kpis" id="piKpis"></div>
+          <div class="analytics-tabs" role="tablist">
+            ${purchaseInventoryTabs.map(([key, label]) => `<button class="analytics-tab ${key === purchaseInventoryActiveTab ? "active" : ""}" type="button" role="tab" data-pi-tab="${key}">${t(label)}</button>`).join("")}
+          </div>
+          <p class="analytics-note" id="piNote" hidden></p>
+          <div id="piReport"></div>
+        `;
+        document.getElementById("piGroupBy").value = purchaseInventoryGroupBy;
+        document.getElementById("piRankingView").value = purchaseInventoryRankingView;
+        bindPurchaseInventoryEvents();
+        populatePurchaseInventoryFilterOptions();
+        updatePurchaseInventoryFilterVisibility();
+        if (options.preserve && purchaseInventoryDataset.products.length) {
+          renderPurchaseInventoryKpis();
+          renderPurchaseInventoryReport();
+        } else {
+          loadPurchaseInventoryAnalytics();
+        }
+      }
+
+      function bindPurchaseInventoryEvents() {
+        featureActions.querySelector("[data-pi-export]")?.addEventListener("click", exportPurchaseInventoryCsv);
+        featureBody.querySelector("[data-pi-search]")?.addEventListener("click", () => {
+          purchaseInventoryFilters = readPurchaseInventoryFilters();
+          loadPurchaseInventoryAnalytics();
+        });
+        featureBody.querySelector("[data-pi-reset]")?.addEventListener("click", () => {
+          purchaseInventoryFilters = defaultPurchaseInventoryFilters();
+          purchaseInventoryGroupBy = "day";
+          purchaseInventoryRankingView = "product";
+          renderPurchaseInventoryAnalyticsFeature({ preserve: false });
+        });
+        featureBody.querySelectorAll("[data-pi-tab]").forEach((button) => {
+          button.addEventListener("click", () => {
+            purchaseInventoryActiveTab = button.dataset.piTab;
+            featureBody.querySelectorAll("[data-pi-tab]").forEach((item) => item.classList.toggle("active", item === button));
+            updatePurchaseInventoryFilterVisibility();
+            renderPurchaseInventoryReport();
+          });
+        });
+        document.getElementById("piGroupBy")?.addEventListener("change", (event) => {
+          purchaseInventoryGroupBy = event.target.value;
+          renderPurchaseInventoryReport();
+        });
+        document.getElementById("piRankingView")?.addEventListener("change", (event) => {
+          purchaseInventoryRankingView = event.target.value;
+          renderPurchaseInventoryReport();
+        });
+      }
+
+      function readPurchaseInventoryFilters() {
+        return {
+          fromDate: document.getElementById("piFromDate")?.value || "",
+          toDate: document.getElementById("piToDate")?.value || "",
+          supplierId: document.getElementById("piSupplier")?.value || "",
+          productId: document.getElementById("piProduct")?.value || "",
+          category: document.getElementById("piCategory")?.value || "",
+          movementType: document.getElementById("piMovementType")?.value || "",
+        };
+      }
+
+      function populatePurchaseInventoryFilterOptions() {
+        const supplierMap = new Map();
+        purchaseInventoryDataset.lines.forEach((line) => supplierMap.set(line.supplier_id || "", piSupplierName(line.supplier, line.supplier_id)));
+        const products = purchaseInventoryDataset.products.map((product) => ({ value: product.id, label: `${product.sku || ""} ${analyticsProductName(product)}`.trim() }));
+        const categories = [...new Set(purchaseInventoryDataset.products.map((product) => product.category).filter(Boolean))];
+        setSelectOptions("piSupplier", [...supplierMap].filter(([value]) => value).map(([value, label]) => ({ value, label })).sort((a, b) => a.label.localeCompare(b.label)), t("piSupplierAll"), purchaseInventoryFilters?.supplierId);
+        setSelectOptions("piProduct", products.sort((a, b) => a.label.localeCompare(b.label)), t("analyticsAllProducts"), purchaseInventoryFilters?.productId);
+        setSelectOptions("piCategory", categories.sort().map((value) => ({ value, label: value })), t("analyticsAllCategories"), purchaseInventoryFilters?.category);
+        const movement = document.getElementById("piMovementType");
+        if (movement) movement.value = purchaseInventoryFilters?.movementType || "";
+      }
+
+      function updatePurchaseInventoryFilterVisibility() {
+        const isInventory = purchaseInventoryActiveTab === "inventoryValue";
+        const isMovement = purchaseInventoryActiveTab === "movementTrend";
+        const showSupplier = ["purchaseTrend", "suppliers", "purchaseRanking", "fulfillment"].includes(purchaseInventoryActiveTab);
+        document.getElementById("piFromField").hidden = isInventory;
+        document.getElementById("piToField").hidden = isInventory;
+        document.getElementById("piSupplierField").hidden = !showSupplier;
+        document.getElementById("piMovementField").hidden = !isMovement;
+        document.getElementById("piGroupField").hidden = purchaseInventoryActiveTab !== "purchaseTrend";
+        document.getElementById("piRankingField").hidden = purchaseInventoryActiveTab !== "purchaseRanking";
+      }
+
+      async function loadPurchaseInventoryAnalytics() {
+        try {
+          purchaseInventoryFilters = readPurchaseInventoryFilters();
+          if (!purchaseInventoryFilters.fromDate || !purchaseInventoryFilters.toDate) throw new Error(`${t("orderDateFrom")} / ${t("orderDateTo")}`);
+          if (purchaseInventoryFilters.fromDate > purchaseInventoryFilters.toDate) throw new Error(`${t("orderDateFrom")} > ${t("orderDateTo")}`);
+          setFeatureMessage(t("purchaseInventoryLoading"));
+          const client = getClient();
+          const [orders, products, inventory, movements] = await Promise.all([
+            fetchAnalyticsPages((from, to) => client.from("purchase_orders")
+              .select("id,order_no,supplier_id,status,order_date,total_amount")
+              .eq("status", "confirmed")
+              .gte("order_date", purchaseInventoryFilters.fromDate)
+              .lt("order_date", nextDateText(purchaseInventoryFilters.toDate))
+              .order("order_date", { ascending: true })
+              .range(from, to)),
+            fetchAnalyticsPages((from, to) => client.from("products")
+              .select("id,sku,name,zh_name,category,unit,cost_price,sale_price,is_active")
+              .order("id", { ascending: true })
+              .range(from, to)),
+            fetchAnalyticsPages((from, to) => client.from("inventory")
+              .select("product_id,quantity,last_movement_at")
+              .order("product_id", { ascending: true })
+              .range(from, to)),
+            fetchAnalyticsPages((from, to) => client.from("stock_movements")
+              .select("id,product_id,movement_type,quantity_change,quantity_after,reference_type,reference_order_no,created_at")
+              .gte("created_at", `${purchaseInventoryFilters.fromDate}T00:00:00`)
+              .lt("created_at", `${nextDateText(purchaseInventoryFilters.toDate)}T00:00:00`)
+              .order("created_at", { ascending: true })
+              .range(from, to)),
+          ]);
+          const orderIds = orders.map((order) => order.id).filter(Boolean);
+          const supplierIds = [...new Set(orders.map((order) => order.supplier_id).filter(Boolean))];
+          const [items, suppliers] = await Promise.all([
+            fetchAnalyticsByIds("purchase_order_items", "id,purchase_order_id,product_id,quantity,received_quantity,is_received_complete,unit_cost,line_amount,received_date", "purchase_order_id", orderIds),
+            fetchAnalyticsByIds("suppliers", "id,name,zh_name", "id", supplierIds),
+          ]);
+          purchaseInventoryDataset = buildPurchaseInventoryDataset(orders, items, suppliers, products, inventory, movements);
+          populatePurchaseInventoryFilterOptions();
+          renderPurchaseInventoryKpis();
+          renderPurchaseInventoryReport();
+          setFeatureMessage(t("purchaseInventoryLoaded", {
+            orders: orders.length,
+            lines: items.length,
+            products: products.length,
+            movements: movements.length,
+          }));
+        } catch (error) {
+          purchaseInventoryDataset = { orders: [], lines: [], products: [], inventory: [], movements: [] };
+          purchaseInventoryReportRows = [];
+          populatePurchaseInventoryFilterOptions();
+          renderPurchaseInventoryKpis();
+          renderPurchaseInventoryReport();
+          setFeatureMessage(t("purchaseInventoryFailed", { message: error.message }), true);
+        }
+      }
+
+      function purchaseInventoryMovementDirection(movement) {
+        const inbound = new Set(["purchase_in", "101", "501", "return_in"]);
+        const outbound = new Set(["sale_out", "601", "603", "return_out"]);
+        if (inbound.has(movement.movement_type)) return "inbound";
+        if (outbound.has(movement.movement_type)) return "outbound";
+        return Number(movement.quantity_change || 0) >= 0 ? "inbound" : "outbound";
+      }
+
+      function buildPurchaseInventoryDataset(orders, items, suppliers, products, inventory, movements) {
+        const ordersById = new Map(orders.map((order) => [order.id, order]));
+        const suppliersById = new Map(suppliers.map((supplier) => [supplier.id, supplier]));
+        const productsById = new Map(products.map((product) => [product.id, product]));
+        const inventoryByProduct = new Map(inventory.map((row) => [row.product_id, row]));
+        const lines = items.map((item) => {
+          const order = ordersById.get(item.purchase_order_id) || {};
+          const product = productsById.get(item.product_id) || {};
+          const quantity = Number(item.quantity || 0);
+          const receivedQuantity = Math.min(quantity, Math.max(0, Number(item.received_quantity || 0)));
+          const unitCost = Number(item.unit_cost || 0);
+          const receivedValue = receivedQuantity * unitCost;
+          const pendingQuantity = Math.max(0, quantity - receivedQuantity);
+          return {
+            ...item,
+            order,
+            supplier: suppliersById.get(order.supplier_id) || {},
+            supplier_id: order.supplier_id || "",
+            product,
+            product_id: item.product_id || "",
+            category: product.category || "",
+            order_date: String(order.order_date || "").slice(0, 10),
+            due_date: String(item.received_date || "").slice(0, 10),
+            quantity,
+            received_quantity: receivedQuantity,
+            pending_quantity: pendingQuantity,
+            purchase_amount: Number(item.line_amount || quantity * unitCost),
+            received_value: receivedValue,
+            pending_value: pendingQuantity * unitCost,
+          };
+        });
+        const inventoryRows = products.map((product) => {
+          const stock = inventoryByProduct.get(product.id) || {};
+          const quantity = Number(stock.quantity || 0);
+          return {
+            product,
+            product_id: product.id,
+            category: product.category || "",
+            quantity,
+            unit: product.unit || "",
+            cost_price: Number(product.cost_price || 0),
+            sale_price: Number(product.sale_price || 0),
+            stock_value: quantity * Number(product.cost_price || 0),
+            retail_value: quantity * Number(product.sale_price || 0),
+            last_movement_at: stock.last_movement_at || "",
+          };
+        });
+        const movementRows = movements.map((movement) => ({
+          ...movement,
+          product: productsById.get(movement.product_id) || {},
+          product_id: movement.product_id || "",
+          category: productsById.get(movement.product_id)?.category || "",
+          unit: productsById.get(movement.product_id)?.unit || "",
+          direction: purchaseInventoryMovementDirection(movement),
+          movement_date: String(movement.created_at || "").slice(0, 10),
+        }));
+        return { orders, lines, products, inventory: inventoryRows, movements: movementRows };
+      }
+
+      function filteredPurchaseInventoryLines() {
+        return purchaseInventoryDataset.lines.filter((line) => {
+          if (purchaseInventoryFilters?.supplierId && line.supplier_id !== purchaseInventoryFilters.supplierId) return false;
+          if (purchaseInventoryFilters?.productId && line.product_id !== purchaseInventoryFilters.productId) return false;
+          if (purchaseInventoryFilters?.category && line.category !== purchaseInventoryFilters.category) return false;
+          return true;
+        });
+      }
+
+      function filteredPurchaseInventoryStock() {
+        return purchaseInventoryDataset.inventory.filter((row) => {
+          if (purchaseInventoryFilters?.productId && row.product_id !== purchaseInventoryFilters.productId) return false;
+          if (purchaseInventoryFilters?.category && row.category !== purchaseInventoryFilters.category) return false;
+          return true;
+        });
+      }
+
+      function filteredPurchaseInventoryMovements() {
+        return purchaseInventoryDataset.movements.filter((row) => {
+          if (purchaseInventoryFilters?.productId && row.product_id !== purchaseInventoryFilters.productId) return false;
+          if (purchaseInventoryFilters?.category && row.category !== purchaseInventoryFilters.category) return false;
+          if (purchaseInventoryFilters?.movementType && row.movement_type !== purchaseInventoryFilters.movementType) return false;
+          return true;
+        });
+      }
+
+      function summarizePurchaseLines(lines) {
+        const orderIds = new Set(lines.map((line) => line.order.id).filter(Boolean));
+        const supplierIds = new Set(lines.map((line) => line.supplier_id).filter(Boolean));
+        const purchaseAmount = lines.reduce((sum, line) => sum + line.purchase_amount, 0);
+        const receivedValue = lines.reduce((sum, line) => sum + line.received_value, 0);
+        const pendingValue = lines.reduce((sum, line) => sum + line.pending_value, 0);
+        return {
+          orders: orderIds.size,
+          suppliers: supplierIds.size,
+          purchaseAmount,
+          receivedValue,
+          pendingValue,
+          receiptRate: purchaseAmount ? receivedValue / purchaseAmount : 0,
+        };
+      }
+
+      function renderPurchaseInventoryKpis() {
+        const container = document.getElementById("piKpis");
+        if (!container) return;
+        const summary = summarizePurchaseLines(filteredPurchaseInventoryLines());
+        const values = [
+          ["piPurchaseAmount", analyticsNumber(summary.purchaseAmount)],
+          ["piPurchaseOrders", analyticsNumber(summary.orders, 0)],
+          ["piSupplierCount", analyticsNumber(summary.suppliers, 0)],
+          ["piReceivedValue", analyticsNumber(summary.receivedValue)],
+          ["piPendingValue", analyticsNumber(summary.pendingValue)],
+          ["piReceiptRate", analyticsPercent(summary.receiptRate)],
+        ];
+        container.innerHTML = values.map(([label, value]) => `<div class="analytics-kpi"><span>${t(label)}</span><strong>${value}</strong></div>`).join("");
+      }
+
+      function purchasePeriodKey(dateText) {
+        if (purchaseInventoryGroupBy === "month") return String(dateText || "").slice(0, 7);
+        if (purchaseInventoryGroupBy === "week") {
+          const date = new Date(`${dateText}T00:00:00`);
+          const day = date.getDay() || 7;
+          date.setDate(date.getDate() - day + 1);
+          return localDateText(date);
+        }
+        return dateText;
+      }
+
+      function purchasePeriodRange(key) {
+        if (purchaseInventoryGroupBy === "month") {
+          const [year, month] = key.split("-").map(Number);
+          return { fromDate: `${key}-01`, toDate: localDateText(new Date(year, month, 0)) };
+        }
+        if (purchaseInventoryGroupBy === "week") {
+          const end = new Date(`${key}T00:00:00`);
+          end.setDate(end.getDate() + 6);
+          return { fromDate: key, toDate: localDateText(end) };
+        }
+        return { fromDate: key, toDate: key };
+      }
+
+      function purchaseFulfillmentBucket(line) {
+        if (!line.due_date) return "missing";
+        const today = new Date(`${todayText()}T00:00:00`);
+        const due = new Date(`${line.due_date}T00:00:00`);
+        const days = Math.round((due - today) / 86400000);
+        if (days < 0) return "overdue";
+        if (days === 0) return "today";
+        if (days <= 7) return "oneToSeven";
+        if (days <= 30) return "eightToThirty";
+        return "later";
+      }
+
+      function purchaseFulfillmentBuckets(lines) {
+        const labels = {
+          overdue: "piOverdue",
+          today: "piDueToday",
+          oneToSeven: "piDueOneToSeven",
+          eightToThirty: "piDueEightToThirty",
+          later: "piDueLater",
+          missing: "piDueMissing",
+        };
+        return Object.entries(labels).map(([key, label]) => {
+          const bucketLines = lines.filter((line) => line.pending_quantity > 0 && purchaseFulfillmentBucket(line) === key);
+          return {
+            key,
+            label: t(label),
+            lines: bucketLines.length,
+            value: bucketLines.reduce((sum, line) => sum + line.pending_value, 0),
+          };
+        });
+      }
+
+      function buildPurchaseInventoryReportRows() {
+        const lines = filteredPurchaseInventoryLines();
+        const totalPurchase = summarizePurchaseLines(lines).purchaseAmount;
+        if (purchaseInventoryActiveTab === "purchaseTrend") {
+          return groupRows(lines, (line) => purchasePeriodKey(line.order_date)).map((group) => {
+            const summary = summarizePurchaseLines(group.lines);
+            const range = purchasePeriodRange(group.key);
+            return {
+              period: group.key,
+              orders: summary.orders,
+              purchase_amount: summary.purchaseAmount,
+              received_value: summary.receivedValue,
+              pending_value: summary.pendingValue,
+              receipt_rate: summary.receiptRate,
+              drill: { action: "purchaseOrders", ...range, includeHistory: true },
+            };
+          }).sort((a, b) => a.period.localeCompare(b.period));
+        }
+        if (purchaseInventoryActiveTab === "suppliers") {
+          return groupRows(lines, (line) => line.supplier_id || "missing").map((group) => {
+            const first = group.lines[0];
+            const summary = summarizePurchaseLines(group.lines);
+            return {
+              supplier: piSupplierName(first.supplier, first.supplier_id),
+              orders: summary.orders,
+              products: new Set(group.lines.map((line) => line.product_id).filter(Boolean)).size,
+              purchase_amount: summary.purchaseAmount,
+              share: totalPurchase ? summary.purchaseAmount / totalPurchase : 0,
+              average_order: summary.orders ? summary.purchaseAmount / summary.orders : 0,
+              pending_value: summary.pendingValue,
+              drill: { action: "purchaseOrders", supplier: piSupplierName(first.supplier, first.supplier_id), includeHistory: true },
+            };
+          }).sort((a, b) => b.purchase_amount - a.purchase_amount);
+        }
+        if (purchaseInventoryActiveTab === "purchaseRanking") {
+          if (purchaseInventoryRankingView === "category") {
+            return groupRows(lines, (line) => line.category || "missing").map((group) => {
+              const purchaseAmount = group.lines.reduce((sum, line) => sum + line.purchase_amount, 0);
+              return {
+                category: group.key === "missing" ? t("analyticsUnassigned") : group.key,
+                products: new Set(group.lines.map((line) => line.product_id).filter(Boolean)).size,
+                purchase_amount: purchaseAmount,
+                share: totalPurchase ? purchaseAmount / totalPurchase : 0,
+              };
+            }).sort((a, b) => b.purchase_amount - a.purchase_amount);
+          }
+          return groupRows(lines, (line) => line.product_id || "missing").map((group) => {
+            const first = group.lines[0];
+            const quantity = group.lines.reduce((sum, line) => sum + line.quantity, 0);
+            const purchaseAmount = group.lines.reduce((sum, line) => sum + line.purchase_amount, 0);
+            return {
+              sku: first.product?.sku || t("analyticsUnassigned"),
+              product: analyticsProductName(first.product),
+              unit: first.product?.unit || t("analyticsUnassigned"),
+              quantity,
+              purchase_amount: purchaseAmount,
+              average_unit_cost: quantity ? purchaseAmount / quantity : 0,
+              share: totalPurchase ? purchaseAmount / totalPurchase : 0,
+              drill: { action: "purchaseOrders", product: first.product?.sku || "", includeHistory: true },
+            };
+          }).sort((a, b) => b.purchase_amount - a.purchase_amount);
+        }
+        if (purchaseInventoryActiveTab === "fulfillment") {
+          const pendingLines = lines.filter((line) => line.pending_quantity > 0);
+          return groupRows(pendingLines, (line) => line.supplier_id || "missing").map((group) => {
+            const first = group.lines[0];
+            const overdueLines = group.lines.filter((line) => purchaseFulfillmentBucket(line) === "overdue");
+            return {
+              supplier: piSupplierName(first.supplier, first.supplier_id),
+              open_lines: group.lines.length,
+              pending_value: group.lines.reduce((sum, line) => sum + line.pending_value, 0),
+              overdue_lines: overdueLines.length,
+              overdue_value: overdueLines.reduce((sum, line) => sum + line.pending_value, 0),
+              earliest_due: group.lines.map((line) => line.due_date).filter(Boolean).sort()[0] || t("analyticsUnassigned"),
+              drill: { action: "purchaseOrders", supplier: piSupplierName(first.supplier, first.supplier_id), includeHistory: false },
+            };
+          }).sort((a, b) => b.overdue_value - a.overdue_value || b.pending_value - a.pending_value);
+        }
+        if (purchaseInventoryActiveTab === "inventoryValue") {
+          return filteredPurchaseInventoryStock().map((row) => ({
+            sku: row.product?.sku || t("analyticsUnassigned"),
+            product: analyticsProductName(row.product),
+            category: row.category || t("analyticsUnassigned"),
+            quantity: row.quantity,
+            unit: row.unit || t("analyticsUnassigned"),
+            cost_price: row.cost_price,
+            stock_value: row.stock_value,
+            sale_price: row.sale_price,
+            retail_value: row.retail_value,
+            drill: { action: "inventoryBalance", product: row.product?.sku || "", category: row.category || "" },
+          })).sort((a, b) => b.stock_value - a.stock_value);
+        }
+        return groupRows(filteredPurchaseInventoryMovements(), (row) => `${row.product_id || "missing"}|${row.unit || ""}`).map((group) => {
+          const first = group.lines[0];
+          const inbound = group.lines.filter((row) => row.direction === "inbound").reduce((sum, row) => sum + Math.abs(Number(row.quantity_change || 0)), 0);
+          const outbound = group.lines.filter((row) => row.direction === "outbound").reduce((sum, row) => sum + Math.abs(Number(row.quantity_change || 0)), 0);
+          return {
+            sku: first.product?.sku || t("analyticsUnassigned"),
+            product: analyticsProductName(first.product),
+            unit: first.unit || t("analyticsUnassigned"),
+            movements: group.lines.length,
+            inbound_quantity: inbound,
+            outbound_quantity: outbound,
+            net_quantity: group.lines.reduce((sum, row) => sum + Number(row.quantity_change || 0), 0),
+            drill: { action: "stockMovements", product: first.product?.sku || "", movementType: purchaseInventoryFilters?.movementType || "" },
+          };
+        }).sort((a, b) => b.movements - a.movements);
+      }
+
+      function groupRows(rows, keyFn) {
+        const groups = new Map();
+        rows.forEach((row) => {
+          const key = keyFn(row);
+          const group = groups.get(key) || { key, lines: [] };
+          group.lines.push(row);
+          groups.set(key, group);
+        });
+        return [...groups.values()];
+      }
+
+      function purchaseInventoryColumns() {
+        const columns = {
+          purchaseTrend: [["period", "piPeriod", "text"], ["orders", "piPurchaseOrders", "integer"], ["purchase_amount", "piPurchaseAmount", "money"], ["received_value", "piReceivedValue", "money"], ["pending_value", "piPendingValue", "money"], ["receipt_rate", "piReceiptRate", "percent"]],
+          suppliers: [["supplier", "supplier", "text"], ["orders", "piPurchaseOrders", "integer"], ["products", "piDistinctProducts", "integer"], ["purchase_amount", "piPurchaseAmount", "money"], ["share", "piPurchaseShare", "percent"], ["average_order", "piAverageOrder", "money"], ["pending_value", "piPendingValue", "money"]],
+          purchaseProduct: [["sku", "sku", "text"], ["product", "productName", "text"], ["unit", "unit", "text"], ["quantity", "quantity", "quantity"], ["purchase_amount", "piPurchaseAmount", "money"], ["average_unit_cost", "piAverageUnitCost", "money"], ["share", "piPurchaseShare", "percent"]],
+          purchaseCategory: [["category", "category", "text"], ["products", "piDistinctProducts", "integer"], ["purchase_amount", "piPurchaseAmount", "money"], ["share", "piPurchaseShare", "percent"]],
+          fulfillment: [["supplier", "supplier", "text"], ["open_lines", "piOpenLines", "integer"], ["pending_value", "piPendingValue", "money"], ["overdue_lines", "piOverdueLines", "integer"], ["overdue_value", "piOverdueValue", "money"], ["earliest_due", "piEarliestDue", "text"]],
+          inventoryValue: [["sku", "sku", "text"], ["product", "productName", "text"], ["category", "category", "text"], ["quantity", "currentStock", "quantity"], ["unit", "unit", "text"], ["cost_price", "costPrice", "money"], ["stock_value", "piStockValue", "money"], ["sale_price", "salePrice", "money"], ["retail_value", "piRetailValue", "money"]],
+          movementTrend: [["sku", "sku", "text"], ["product", "productName", "text"], ["unit", "unit", "text"], ["movements", "piMovementCount", "integer"], ["inbound_quantity", "piInboundQuantity", "quantity"], ["outbound_quantity", "piOutboundQuantity", "quantity"], ["net_quantity", "piNetQuantity", "quantity"]],
+        };
+        if (purchaseInventoryActiveTab === "purchaseRanking") return purchaseInventoryRankingView === "category" ? columns.purchaseCategory : columns.purchaseProduct;
+        return columns[purchaseInventoryActiveTab] || columns.purchaseTrend;
+      }
+
+      function purchaseInventoryChartRows() {
+        if (purchaseInventoryActiveTab === "fulfillment") {
+          return purchaseFulfillmentBuckets(filteredPurchaseInventoryLines()).map((row) => ({ label: row.label, value: row.value }));
+        }
+        if (purchaseInventoryActiveTab === "inventoryValue") {
+          return groupRows(filteredPurchaseInventoryStock(), (row) => row.category || t("analyticsUnassigned")).map((group) => ({
+            label: group.key,
+            value: group.lines.reduce((sum, row) => sum + row.stock_value, 0),
+          })).sort((a, b) => b.value - a.value);
+        }
+        if (purchaseInventoryActiveTab === "movementTrend") {
+          return groupRows(filteredPurchaseInventoryMovements(), (row) => movementTypeLabel(row.movement_type) || t("analyticsUnassigned")).map((group) => ({
+            label: group.key,
+            value: group.lines.length,
+          })).sort((a, b) => b.value - a.value);
+        }
+        return purchaseInventoryReportRows.map((row) => ({
+          label: row.period || row.supplier || row.product || row.category || row.sku,
+          value: Number(row.purchase_amount || row.pending_value || 0),
+        }));
+      }
+
+      function renderPurchaseInventoryReport() {
+        const container = document.getElementById("piReport");
+        const note = document.getElementById("piNote");
+        if (!container || !note) return;
+        purchaseInventoryReportRows = buildPurchaseInventoryReportRows();
+        const stock = filteredPurchaseInventoryStock();
+        const zeroCostCount = stock.filter((row) => row.quantity > 0 && row.cost_price === 0).length;
+        if (purchaseInventoryActiveTab === "inventoryValue") {
+          note.hidden = false;
+          note.textContent = `${t("piCurrentCostEstimate")}${zeroCostCount ? ` ${t("piZeroCostWarning", { count: zeroCostCount })}` : ""}`;
+        } else if (purchaseInventoryActiveTab === "movementTrend") {
+          note.hidden = false;
+          note.textContent = t("piMovementUnitNote");
+        } else {
+          note.hidden = true;
+          note.textContent = "";
+        }
+        const chartRows = purchaseInventoryChartRows();
+        if (!purchaseInventoryReportRows.length && !chartRows.some((row) => Number(row.value || 0) > 0)) {
+          container.innerHTML = `<div class="analytics-empty">${t("purchaseInventoryNoData")}</div>`;
+          return;
+        }
+        const maxValue = Math.max(...chartRows.map((row) => Number(row.value || 0)), 0);
+        const chart = chartRows.slice(0, 12).map((row) => {
+          const width = maxValue > 0 ? Math.max(1, Number(row.value || 0) / maxValue * 100) : 0;
+          return `<div class="analytics-bar-row"><span>${escapeHtml(row.label)}</span><div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:${width}%"></div></div><strong>${analyticsNumber(row.value)}</strong></div>`;
+        }).join("");
+        const columns = purchaseInventoryColumns();
+        const hasDrill = purchaseInventoryReportRows.some((row) => row.drill);
+        container.innerHTML = `
+          ${chart ? `<div class="analytics-chart">${chart}</div>` : ""}
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead><tr>${columns.map(([, label]) => `<th>${t(label)}</th>`).join("")}${hasDrill ? `<th>${t("actions")}</th>` : ""}</tr></thead>
+              <tbody>${purchaseInventoryReportRows.map((row, index) => `<tr>${columns.map(([key,, type]) => `<td>${escapeHtml(formatAnalyticsCell(row[key], type))}</td>`).join("")}${hasDrill ? `<td>${row.drill ? `<button class="tool-btn" type="button" data-pi-drill="${index}">${t("piViewDetails")}</button>` : ""}</td>` : ""}</tr>`).join("")}</tbody>
+            </table>
+          </div>
+        `;
+        container.querySelectorAll("[data-pi-drill]").forEach((button) => button.addEventListener("click", () => drillPurchaseInventoryReport(Number(button.dataset.piDrill))));
+      }
+
+      function drillPurchaseInventoryReport(index) {
+        const row = purchaseInventoryReportRows[index];
+        if (!row?.drill) return;
+        const drill = row.drill;
+        pendingFeatureFilters = {
+          action: drill.action,
+          fromDate: drill.fromDate || purchaseInventoryFilters.fromDate,
+          toDate: drill.toDate || purchaseInventoryFilters.toDate,
+          supplier: drill.supplier || "",
+          product: drill.product || "",
+          category: drill.category || "",
+          movementType: drill.movementType || "",
+          includeHistory: drill.includeHistory === true,
+        };
+        openFeature(drill.action);
+      }
+
+      function exportPurchaseInventoryCsv() {
+        if (!purchaseInventoryReportRows.length) return;
+        const columns = purchaseInventoryColumns();
+        const rows = [
+          columns.map(([, label]) => csvCell(t(label))).join(","),
+          ...purchaseInventoryReportRows.map((row) => columns.map(([key]) => csvCell(row[key])).join(",")),
+        ];
+        const blob = new Blob(["\uFEFF", rows.join("\r\n")], { type: "text/csv;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        const period = purchaseInventoryActiveTab === "inventoryValue" ? todayText() : `${purchaseInventoryFilters.fromDate}_${purchaseInventoryFilters.toDate}`;
+        link.download = `purchase_inventory_${purchaseInventoryActiveTab}_${period}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        setFeatureMessage(t("piExported"));
       }
 
       function renderProductFeature(canEdit) {
@@ -3150,6 +4930,8 @@
               </label>
               <label>${t("receivedDateFrom")}<input id="poReceivedFromFilter" type="date"></label>
               <label>${t("receivedDateTo")}<input id="poReceivedToFilter" type="date"></label>
+              <label>${t("orderDateFrom")}<input id="poOrderFromFilter" type="date"></label>
+              <label>${t("orderDateTo")}<input id="poOrderToFilter" type="date"></label>
               <label>${t("createdAtFrom")}<input id="poCreatedFromFilter" type="date"></label>
               <label>${t("createdAtTo")}<input id="poCreatedToFilter" type="date"></label>
               <label class="checkbox-label"><input id="poIncludeHistoryFilter" type="checkbox">${t("includeHistoricalOrders")}</label>
@@ -3217,6 +4999,16 @@
           });
         });
         document.getElementById("poIncludeHistoryFilter")?.addEventListener("change", loadPurchaseOrders);
+
+        const drillFilters = takePendingFeatureFilters("purchaseOrders");
+        if (drillFilters) {
+          document.getElementById("poSupplierFilter").value = drillFilters.supplier || "";
+          document.getElementById("poProductFilter").value = drillFilters.product || "";
+          document.getElementById("poOrderFromFilter").value = drillFilters.fromDate || "";
+          document.getElementById("poOrderToFilter").value = drillFilters.toDate || "";
+          document.getElementById("poStatusFilter").value = "confirmed";
+          document.getElementById("poIncludeHistoryFilter").checked = drillFilters.includeHistory === true;
+        }
 
         loadPurchaseOrders();
       }
@@ -3316,6 +5108,8 @@
           status: document.getElementById("poStatusFilter")?.value || "",
           receivedFrom: document.getElementById("poReceivedFromFilter")?.value || "",
           receivedTo: document.getElementById("poReceivedToFilter")?.value || "",
+          orderFrom: document.getElementById("poOrderFromFilter")?.value || "",
+          orderTo: document.getElementById("poOrderToFilter")?.value || "",
           createdFrom: document.getElementById("poCreatedFromFilter")?.value || "",
           createdTo: document.getElementById("poCreatedToFilter")?.value || "",
         };
@@ -3327,6 +5121,9 @@
           if (filters.status && row.status !== filters.status) return false;
           if (filters.receivedFrom && row.received_date < filters.receivedFrom) return false;
           if (filters.receivedTo && row.received_date > filters.receivedTo) return false;
+          const orderDate = String(row.order_date || "").slice(0, 10);
+          if (filters.orderFrom && orderDate < filters.orderFrom) return false;
+          if (filters.orderTo && orderDate > filters.orderTo) return false;
           const createdDate = String(row.created_at || "").slice(0, 10);
           if (filters.createdFrom && createdDate < filters.createdFrom) return false;
           if (filters.createdTo && createdDate > filters.createdTo) return false;
@@ -4701,6 +6498,12 @@
           });
         });
 
+        const drillFilters = takePendingFeatureFilters("inventoryBalance");
+        if (drillFilters) {
+          document.getElementById("inventorySkuFilter").value = drillFilters.product || "";
+          document.getElementById("inventoryCategoryFilter").value = drillFilters.category || "";
+        }
+
         loadInventory();
       }
 
@@ -4984,6 +6787,14 @@
           });
         });
 
+        const drillFilters = takePendingFeatureFilters("stockMovements");
+        if (drillFilters) {
+          document.getElementById("stockMovementFromFilter").value = drillFilters.fromDate || today;
+          document.getElementById("stockMovementToFilter").value = drillFilters.toDate || today;
+          document.getElementById("stockMovementProductFilter").value = drillFilters.product || "";
+          document.getElementById("stockMovementTypeFilter").value = drillFilters.movementType || "";
+        }
+
         loadStockMovements();
       }
 
@@ -5259,6 +7070,19 @@
         if (!tile?.dataset.action) return;
         event.preventDefault();
         openFeature(tile.dataset.action);
+      });
+
+      smartQueryForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        runSmartQuery(smartQueryInput.value);
+      });
+
+      smartQueryModal.addEventListener("click", (event) => {
+        if (event.target === smartQueryModal || event.target.closest("[data-smart-query-close]")) closeSmartQuery();
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !smartQueryModal.hidden) closeSmartQuery();
       });
     })();
   </script>
