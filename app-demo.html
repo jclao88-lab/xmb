@@ -313,6 +313,12 @@
       white-space: nowrap;
     }
 
+    .report-step[aria-current="step"] {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
     .section {
       margin-bottom: 22px;
     }
@@ -388,6 +394,45 @@
       border-color: #9fb7cf;
       box-shadow: 0 3px 10px rgba(15, 23, 42, 0.12);
       transform: translateY(-1px);
+    }
+
+    .saved-report-tile {
+      position: relative;
+      padding-right: 58px;
+    }
+
+    .saved-report-delete {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      min-width: 42px;
+      height: 26px;
+      padding: 0 7px;
+      border: 1px solid #c24141;
+      border-radius: 2px;
+      background: #fff;
+      color: #a12626;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .saved-report-delete:hover {
+      background: #fff1f1;
+    }
+
+    .saved-report-meta {
+      display: grid;
+      gap: 3px;
+      margin-top: 10px;
+      color: #64748b;
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    .saved-report-meta strong {
+      color: #475569;
+      font-weight: 700;
     }
 
     .tile h3 {
@@ -494,6 +539,66 @@
 
     .smart-query-modal[hidden] {
       display: none;
+    }
+
+    .ai-billing-modal {
+      position: fixed;
+      z-index: 1100;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(15, 23, 42, 0.52);
+    }
+
+    .ai-billing-modal[hidden] {
+      display: none;
+    }
+
+    .ai-billing-dialog {
+      width: min(420px, 100%);
+      padding: 20px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.28);
+    }
+
+    .ai-billing-dialog h2 {
+      margin: 0 0 10px;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+
+    .ai-billing-dialog p {
+      margin: 0;
+      color: #475569;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .ai-billing-link {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #0a6ed1;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .ai-billing-link:hover {
+      text-decoration: underline;
+    }
+
+    .ai-billing-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 20px;
     }
 
     .smart-query-dialog {
@@ -917,10 +1022,29 @@
       letter-spacing: 0;
     }
 
+    .report-request-field {
+      display: grid;
+      gap: 5px;
+      margin-top: 12px;
+    }
+
+    .report-request-field + .report-request-field {
+      margin-top: 20px;
+    }
+
+    .report-request-field textarea,
+    .report-request-field input {
+      width: 100%;
+    }
+
     .form-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(150px, 1fr));
       gap: 10px;
+    }
+
+    .report-model-grid {
+      grid-template-columns: minmax(280px, 420px);
     }
 
     .form-grid label {
@@ -1312,7 +1436,20 @@
                 </button>
               </div>
               <p class="smart-query-status" id="smartQueryStatus" aria-live="polite" data-i18n="smartQueryHint">支持查询现有的销售、采购和库存分析报表。</p>
+              <button class="tool-btn primary" id="smartQueryNewReport" type="button" hidden data-i18n="newReport">新报表</button>
             </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="ai-billing-modal" id="aiBillingModal" role="dialog" aria-modal="true" aria-labelledby="aiBillingTitle" hidden>
+        <div class="ai-billing-dialog">
+          <h2 id="aiBillingTitle" data-i18n="reportDesignerBillingTitle">AI 收费功能</h2>
+          <p data-i18n="reportDesignerBillingConfirm">本功能为独立收费功能，请确认。</p>
+          <a class="ai-billing-link" href="store/ai-report-billing.html" target="_blank" rel="noopener" data-i18n="reportDesignerBillingDetails">查看收费说明</a>
+          <div class="ai-billing-actions">
+            <button class="tool-btn" type="button" data-ai-billing-cancel data-i18n="cancel">取消</button>
+            <button class="tool-btn primary" type="button" data-ai-billing-confirm data-i18n="reportDesignerBillingContinue">确认并继续</button>
           </div>
         </div>
       </div>
@@ -1358,6 +1495,52 @@
         smartQuerySubmit: "查询",
         smartQueryEmpty: "请输入您想查看的报表。",
         smartQueryNoMatch: "暂时找不到对应的现有报表，请尝试“销售趋势”“客户排行”或“库存价值”。",
+        myReportsTitle: "我的报表",
+        myReportsSub: "查看由智能查询生成并保存的报表。",
+        myReportsLoading: "正在读取已保存报表...",
+        myReportsEmpty: "尚未保存报表。以后通过智能查询生成并保存的报表会显示在这里。",
+        myReportsLoadError: "无法读取已保存报表。",
+        myReportsDelete: "删除",
+        myReportsDeleteConfirm: "确定删除这个报表吗？",
+        myReportsDeleting: "正在删除报表...",
+        myReportsDeleteError: "无法删除报表。您可能没有删除权限。",
+        myReportsDeleteOwnOnly: "只能删除当前账号创建的报表。",
+        myReportsCreatedBy: "创建人",
+        myReportsCreatedAt: "建立日期",
+        newReport: "新报表",
+        reportDesignerTitle: "报表设计",
+        reportDesignerSub: "逐步确定报表需求并生成可保存的报表定义。",
+        reportDesignerQuestion: "您想查看什么？（标题）",
+        reportDesignerQuestionPlaceholder: "例如：比较本月各国家的销售额和低库存商品数",
+        reportDesignerOtherRequirements: "其他要求",
+        reportDesignerOtherRequirementsPlaceholder: "例如：只显示前10名，并按销售额降序排列",
+        reportDesignerModel: "AI 模型",
+        reportDesignerAskAi: "AI 建议",
+        reportDesignerBillingTitle: "AI 收费功能",
+        reportDesignerBillingConfirm: "本功能为独立收费功能，请确认。",
+        reportDesignerBillingDetails: "查看收费说明",
+        reportDesignerBillingContinue: "确认并继续",
+        reportDesignerMetrics: "指标",
+        reportDesignerDimensions: "分组维度",
+        reportDesignerSearchFields: "检索字段",
+        reportDesignerSearchFieldsHint: "选择运行报表时允许用户填写的可选检索条件。",
+        reportDesignerPageRequirements: "当前页面文字要求",
+        reportDesignerPageRequirementsPlaceholder: "输入对此页面设置的补充要求",
+        reportDesignerLayout: "展示方式",
+        reportDesignerNext: "下一步",
+        reportDesignerPrevious: "上一步",
+        reportDesignerReview: "确认报表定义",
+        reportDesignerStepRequest: "需求",
+        reportDesignerStepMetrics: "指标",
+        reportDesignerStepDisplay: "展示",
+        reportDesignerStepSearch: "检索字段",
+        reportDesignerStepReview: "确认",
+        reportDesignerRun: "运行报表",
+        reportDesignerSave: "保存",
+        reportDesignerAiUnavailable: "AI 报表服务尚未配置。请部署 report-designer，并设置所选模型对应的 API Key。",
+        reportDesignerRunPending: "正在执行受控查询...",
+        reportDesignerOptionsLoading: "正在加载检索字段选项...",
+        reportDesignerNoResults: "查询完成，但没有符合条件的数据。",
         expandSection: "展开",
         collapseSection: "收起",
         backToLaunchpad: "返回功能总览",
@@ -1716,6 +1899,52 @@
         smartQuerySubmit: "Search",
         smartQueryEmpty: "Enter the report you want to view.",
         smartQueryNoMatch: "No existing report matches that request yet. Try “sales trend”, “customer ranking”, or “inventory value”.",
+        myReportsTitle: "My Reports",
+        myReportsSub: "View reports created and saved from Smart Query.",
+        myReportsLoading: "Loading saved reports...",
+        myReportsEmpty: "No reports have been saved yet. Reports generated and saved from Smart Query will appear here.",
+        myReportsLoadError: "Saved reports could not be loaded.",
+        myReportsDelete: "Delete",
+        myReportsDeleteConfirm: "Delete this report?",
+        myReportsDeleting: "Deleting report...",
+        myReportsDeleteError: "The report could not be deleted. You may not have permission.",
+        myReportsDeleteOwnOnly: "You can only delete reports created by your current account.",
+        myReportsCreatedBy: "Created by",
+        myReportsCreatedAt: "Created on",
+        newReport: "New Report",
+        reportDesignerTitle: "Report Designer",
+        reportDesignerSub: "Define the report step by step, then save its reusable definition.",
+        reportDesignerQuestion: "What do you want to see? (Title)",
+        reportDesignerQuestionPlaceholder: "For example: compare this month's sales and low-stock items by country",
+        reportDesignerOtherRequirements: "Other Requirements",
+        reportDesignerOtherRequirementsPlaceholder: "For example: show the top 10 and sort by sales amount",
+        reportDesignerModel: "AI Model",
+        reportDesignerAskAi: "Ask AI",
+        reportDesignerBillingTitle: "AI Billing Confirmation",
+        reportDesignerBillingConfirm: "This feature is billed separately. Please confirm.",
+        reportDesignerBillingDetails: "View billing details",
+        reportDesignerBillingContinue: "Confirm and Continue",
+        reportDesignerMetrics: "Metrics",
+        reportDesignerDimensions: "Group by",
+        reportDesignerSearchFields: "Search Fields",
+        reportDesignerSearchFieldsHint: "Select the optional search criteria users may enter when running the report.",
+        reportDesignerPageRequirements: "Current Page Requirements",
+        reportDesignerPageRequirementsPlaceholder: "Enter additional requirements for the settings on this page",
+        reportDesignerLayout: "Display",
+        reportDesignerNext: "Next",
+        reportDesignerPrevious: "Back",
+        reportDesignerReview: "Confirm Report Definition",
+        reportDesignerStepRequest: "Request",
+        reportDesignerStepMetrics: "Metrics",
+        reportDesignerStepDisplay: "Display",
+        reportDesignerStepSearch: "Search Fields",
+        reportDesignerStepReview: "Review",
+        reportDesignerRun: "Run Report",
+        reportDesignerSave: "Save",
+        reportDesignerAiUnavailable: "The AI report service is not configured. Deploy report-designer and set the API key required by the selected model.",
+        reportDesignerRunPending: "Running the controlled query...",
+        reportDesignerOptionsLoading: "Loading search field options...",
+        reportDesignerNoResults: "The query completed with no matching data.",
         expandSection: "Expand",
         collapseSection: "Collapse",
         backToLaunchpad: "Back to Overview",
@@ -2180,6 +2409,7 @@
       { section: "manage", title: { "zh-CN": "销售分析", en: "Sales Analytics" }, sub: { "zh-CN": "销售、客户、商品和毛利报表", en: "Sales, customer, product, and profit reports" }, roles: ["owner", "manager"], icon: "A", action: "salesAnalytics" },
       { section: "manage", title: { "zh-CN": "采购与库存分析", en: "Purchase & Inventory Analytics" }, sub: { "zh-CN": "采购、供应商、履约和库存报表", en: "Purchase, supplier, fulfillment, and inventory reports" }, roles: ["owner", "manager"], icon: "I", action: "purchaseInventoryAnalytics" },
       { section: "manage", title: { "zh-CN": "智能查询", en: "Smart Query" }, sub: { "zh-CN": "用自然语言查找现有报表", en: "Find existing reports in plain language" }, roles: ["owner", "manager"], icon: "Q", action: "smartQuery" },
+      { section: "manage", title: { "zh-CN": "我的报表", en: "My Report" }, sub: { "zh-CN": "已保存的智能报表", en: "Saved intelligent reports" }, roles: ["owner", "manager"], icon: "R", action: "myReports" },
       { section: "manage", title: { "zh-CN": "系统设置", en: "Settings" }, sub: { "zh-CN": "系统参数设置", en: "System settings" }, roles: ["owner"], icon: "G" },
     ];
 
@@ -2616,7 +2846,11 @@
       const smartQueryForm = document.getElementById("smartQueryForm");
       const smartQueryInput = document.getElementById("smartQueryInput");
       const smartQueryStatus = document.getElementById("smartQueryStatus");
+      const smartQueryNewReport = document.getElementById("smartQueryNewReport");
+      const aiBillingModal = document.getElementById("aiBillingModal");
       let smartQueryReturnFocus = null;
+      let aiBillingReturnFocus = null;
+      let aiBillingResolve = null;
       let productRows = [];
       let inventoryRows = [];
       let stockMovementRows = [];
@@ -2645,6 +2879,11 @@
       let purchaseInventoryGroupBy = "day";
       let purchaseInventoryRankingView = "product";
       let pendingFeatureFilters = null;
+      let reportDesignerStep = 1;
+      let reportDesignerDraft = null;
+      let reportDesignerModels = [];
+      let activeSavedReport = null;
+      let reportParameterOptions = {};
 
       const featureMeta = {
         posCheckout: ["posCheckoutTitle", "posCheckoutSub"],
@@ -2658,6 +2897,7 @@
         userManage: ["userManageTitle", "userManageSub"],
         salesAnalytics: ["salesAnalyticsTitle", "salesAnalyticsSub"],
         purchaseInventoryAnalytics: ["purchaseInventoryAnalyticsTitle", "purchaseInventoryAnalyticsSub"],
+        myReports: ["myReportsTitle", "myReportsSub"],
       };
 
       function escapeHtml(value) {
@@ -3467,6 +3707,7 @@
         if (action === "userManage") renderUserFeature();
         if (action === "salesAnalytics") renderSalesAnalyticsFeature();
         if (action === "purchaseInventoryAnalytics") renderPurchaseInventoryAnalyticsFeature();
+        if (action === "myReports") renderMyReportsFeature();
 
         document.querySelector(".page-heading").scrollIntoView({ behavior: "smooth", block: "start" });
       }
@@ -3477,6 +3718,631 @@
         document.body.classList.remove("feature-open");
       }
 
+      function renderMyReportsFeature() {
+        featureActions.innerHTML = `
+          <button class="tool-btn primary" type="button" data-new-report>${t("newReport")}</button>
+          <button class="tool-btn" type="button" data-close-feature>${t("backToLaunchpad")}</button>
+        `;
+        featureBody.innerHTML = `
+          <p class="status-line" id="myReportsStatus">${t("myReportsLoading")}</p>
+          <div class="tiles" id="myReportsTiles"></div>
+        `;
+        featureActions.querySelector("[data-new-report]").addEventListener("click", async () => {
+          if (await confirmAiBilling()) openReportDesigner();
+        });
+        loadMyReports();
+      }
+
+      function openReportDesigner(question = "") {
+        closeSmartQuery();
+        currentFeatureAction = "reportDesigner";
+        reportDesignerStep = 1;
+        reportDesignerDraft = {
+          question,
+          additional_requirements: "",
+          title: "",
+          model_key: "",
+          metrics: ["sales_amount"],
+          dimensions: ["sales_order_date"],
+          filters: [],
+          order_by: [],
+          parameters: [],
+          parameters_configured: false,
+          page_requirements: { metrics: "", display: "", search_fields: "" },
+          limit: 50,
+          visualization: "table",
+          explanation: "",
+        };
+        document.body.classList.add("feature-open");
+        workspace.hidden = false;
+        featureTitle.textContent = t("reportDesignerTitle");
+        featureSubtitle.textContent = t("reportDesignerSub");
+        renderReportDesigner();
+        loadReportDesignerModels();
+        document.querySelector(".page-heading").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function renderReportDesigner() {
+        const steps = ["reportDesignerStepRequest", "reportDesignerStepMetrics", "reportDesignerStepDisplay", "reportDesignerStepSearch", "reportDesignerStepReview"]
+          .map((key, index) => `<span class="role-badge report-step" ${reportDesignerStep === index + 1 ? 'aria-current="step"' : ""}>${t(key)}</span>`)
+          .join(" ");
+        featureActions.innerHTML = `
+          <span aria-label="Report design steps">${steps}</span>
+          ${reportDesignerStep === 5 ? `<button class="tool-btn primary" type="button" data-report-save>${t("reportDesignerSave")}</button>` : ""}
+          <button class="tool-btn" type="button" data-close-feature>${t("backToLaunchpad")}</button>
+        `;
+        const body = reportDesignerStep === 1 ? `
+          <div class="form-panel"><div class="form-grid report-model-grid"><label>${t("reportDesignerModel")}<select id="reportModel">${reportDesignerModels.map((model) => `<option value="${escapeHtml(model.model_key)}">${escapeHtml(model.display_name)}</option>`).join("")}</select></label></div><label class="report-request-field">${t("reportDesignerQuestion")}<input id="reportQuestion" type="text" value="${escapeHtml(reportDesignerDraft.question)}" placeholder="${t("reportDesignerQuestionPlaceholder")}"></label><label class="report-request-field">${t("reportDesignerOtherRequirements")}<textarea id="reportAdditionalRequirements" rows="3" placeholder="${t("reportDesignerOtherRequirementsPlaceholder")}">${escapeHtml(reportDesignerDraft.additional_requirements || "")}</textarea></label></div>
+        ` : reportDesignerStep === 2 ? `
+          <div class="form-panel"><h3>${t("reportDesignerMetrics")}</h3><div class="form-grid">
+            ${["sales_amount", "sales_order_count", "sales_quantity", "estimated_gross_profit", "purchase_amount", "purchase_quantity", "stock_quantity", "low_stock_item_count", "inbound_quantity", "outbound_quantity"].map((metric) => `<label class="checkbox-field"><input type="checkbox" value="${metric}" data-report-metric ${reportDesignerDraft.metrics.includes(metric) ? "checked" : ""}> ${escapeHtml(metric)}</label>`).join("")}
+          </div>${renderReportPageRequirement("metrics")}</div>
+        ` : reportDesignerStep === 3 ? `
+          <div class="form-panel"><h3>${t("reportDesignerDimensions")}</h3><div class="form-grid">${["sales_order_date", "purchase_order_date", "customer", "customer_country", "customer_city", "supplier", "product", "product_category", "sales_order_status", "purchase_order_status", "stock_movement_date", "stock_movement_type"].map((key) => `<label class="checkbox-field"><input type="checkbox" value="${key}" data-report-dimension ${reportDesignerDraft.dimensions.includes(key) ? "checked" : ""}> ${key}</label>`).join("")}</div><label>${t("reportDesignerLayout")}<select id="reportVisualization"><option value="table">Table</option><option value="bar">Bar chart</option><option value="line">Line chart</option></select></label>${renderReportPageRequirement("display")}</div>
+        ` : reportDesignerStep === 4 ? `
+          <div class="form-panel"><h3>${t("reportDesignerSearchFields")}</h3><p class="status-line">${t("reportDesignerSearchFieldsHint")}</p><div class="form-grid">${renderReportSearchFieldChoices()}</div>${renderReportPageRequirement("search_fields")}</div>
+        ` : `
+          <div class="form-panel"><h3>${t("reportDesignerReview")}</h3><pre class="status-line">${escapeHtml(JSON.stringify(reportDesignerDraft, null, 2))}</pre><p class="status-line" id="reportDesignerStatus"></p></div>
+        `;
+        featureBody.innerHTML = `${body}${reportDesignerStep === 5 ? "" : '<p class="status-line" id="reportDesignerStatus"></p>'}<div class="form-actions"><button class="tool-btn" type="button" data-report-back ${reportDesignerStep === 1 ? "disabled" : ""}>${t("reportDesignerPrevious")}</button>${reportDesignerStep === 1 ? `<button class="tool-btn primary" type="button" data-report-ai>${t("reportDesignerAskAi")}</button>` : `<button class="tool-btn primary" type="button" data-report-next>${reportDesignerStep === 5 ? t("reportDesignerRun") : t("reportDesignerNext")}</button>`}</div>`;
+        const visualization = document.getElementById("reportVisualization");
+        const model = document.getElementById("reportModel");
+        if (model) model.value = reportDesignerDraft.model_key || reportDesignerModels[0]?.model_key || "";
+        if (visualization) visualization.value = reportDesignerDraft.visualization || "table";
+        featureBody.querySelector("[data-report-back]").addEventListener("click", () => {
+          captureReportDesignerStep();
+          reportDesignerStep -= 1;
+          renderReportDesigner();
+        });
+        featureBody.querySelector("[data-report-next]")?.addEventListener("click", async () => {
+          captureReportDesignerStep();
+          if (reportDesignerStep === 5) { await executeReportDraft(); return; }
+          reportDesignerStep += 1; renderReportDesigner();
+        });
+        featureBody.querySelector("[data-report-ai]")?.addEventListener("click", () => requestAiReportDraft());
+        featureActions.querySelector("[data-report-save]")?.addEventListener("click", () => saveReportDraft());
+      }
+
+      function renderReportPageRequirement(key) {
+        const value = reportDesignerDraft.page_requirements?.[key] || "";
+        return `<label class="report-request-field">${t("reportDesignerPageRequirements")}<textarea rows="3" data-report-page-requirement="${escapeHtml(key)}" placeholder="${t("reportDesignerPageRequirementsPlaceholder")}">${escapeHtml(value)}</textarea></label>`;
+      }
+
+      function captureReportDesignerStep() {
+        const requirementInput = featureBody.querySelector("[data-report-page-requirement]");
+        if (requirementInput) {
+          reportDesignerDraft.page_requirements = {
+            ...(reportDesignerDraft.page_requirements || {}),
+            [requirementInput.dataset.reportPageRequirement]: requirementInput.value.trim(),
+          };
+        }
+        if (reportDesignerStep === 2) {
+          const selectedMetrics = [...document.querySelectorAll("[data-report-metric]:checked")].map((item) => item.value);
+          const metricsChanged = JSON.stringify(selectedMetrics) !== JSON.stringify(reportDesignerDraft.metrics);
+          reportDesignerDraft.metrics = selectedMetrics;
+          if (metricsChanged) {
+            reportDesignerDraft.filters = [];
+            reportDesignerDraft.parameters = [];
+            reportDesignerDraft.parameters_configured = false;
+            reportDesignerDraft.order_by = [];
+            reportDesignerDraft.title = "";
+            reportDesignerDraft.zh_title = "";
+            reportDesignerDraft.explanation = "";
+          }
+          reportDesignerDraft = normalizeReportDraftForMetrics(reportDesignerDraft);
+        }
+        if (reportDesignerStep === 3) {
+          reportDesignerDraft.dimensions = [...document.querySelectorAll("[data-report-dimension]:checked")].map((item) => item.value);
+          reportDesignerDraft.visualization = document.getElementById("reportVisualization")?.value || reportDesignerDraft.visualization;
+          reportDesignerDraft = normalizeReportDraftForMetrics(reportDesignerDraft);
+        }
+        if (reportDesignerStep === 4) {
+          const selectedFields = [...document.querySelectorAll("[data-report-search-field]:checked")].map((item) => item.value);
+          const existingParameters = Array.isArray(reportDesignerDraft.parameters) ? reportDesignerDraft.parameters : [];
+          reportDesignerDraft.parameters = selectedFields.flatMap((field) => {
+            const existing = existingParameters.filter((parameter) => parameter.field === field);
+            return existing.length ? existing : createDefaultReportParameters(field);
+          });
+          reportDesignerDraft.parameters_configured = true;
+          reportDesignerDraft = normalizeReportDraftForMetrics(reportDesignerDraft);
+        }
+      }
+
+      async function requestAiReportDraft() {
+        reportDesignerDraft.question = document.getElementById("reportQuestion").value.trim();
+        reportDesignerDraft.additional_requirements = document.getElementById("reportAdditionalRequirements")?.value.trim() || "";
+        try {
+          reportDesignerDraft.model_key = document.getElementById("reportModel")?.value || reportDesignerDraft.model_key;
+          const { data, error } = await getClient().functions.invoke("report-designer", { body: { action: "design", question: reportDesignerDraft.question, additional_requirements: reportDesignerDraft.additional_requirements, model_key: reportDesignerDraft.model_key, draft: reportDesignerDraft } });
+          if (error) throw error;
+          reportDesignerDraft = { ...reportDesignerDraft, ...(data?.draft || {}) };
+          reportDesignerStep = 2;
+          renderReportDesigner();
+        } catch (error) {
+          const status = document.getElementById("reportDesignerStatus") || document.getElementById("featureStatus");
+          if (status) {
+            status.textContent = await readFunctionError(error, t("reportDesignerAiUnavailable"));
+            status.classList.add("error");
+          }
+        }
+      }
+
+      function confirmAiBilling() {
+        if (aiBillingResolve) return Promise.resolve(false);
+        aiBillingReturnFocus = document.activeElement;
+        aiBillingModal.hidden = false;
+        requestAnimationFrame(() => aiBillingModal.querySelector("[data-ai-billing-confirm]").focus());
+        return new Promise((resolve) => { aiBillingResolve = resolve; });
+      }
+
+      function closeAiBilling(confirmed) {
+        if (!aiBillingResolve) return;
+        const resolve = aiBillingResolve;
+        aiBillingResolve = null;
+        aiBillingModal.hidden = true;
+        aiBillingReturnFocus?.focus();
+        aiBillingReturnFocus = null;
+        resolve(confirmed);
+      }
+
+      async function executeReportDraft(draft = reportDesignerDraft, options = {}) {
+        const status = document.getElementById("reportDesignerStatus") || document.getElementById("savedReportStatus") || document.getElementById("reportResultCriteriaStatus");
+        if (status) status.textContent = t("reportDesignerRunPending");
+        try {
+          const executionDraft = normalizeReportDraftForMetrics(draft);
+          if (draft === reportDesignerDraft) reportDesignerDraft = executionDraft;
+          const { data, error } = await getClient().functions.invoke("report-designer", { body: { action: "execute", draft: executionDraft } });
+          if (error) throw error;
+          const criteriaDraft = options.criteriaDraft || draft;
+          const parameterOptions = await loadReportParameterOptions(criteriaDraft);
+          renderReportResult(data?.result, { ...options, criteriaDraft, parameterOptions });
+        } catch (error) {
+          if (status) {
+            status.textContent = await readFunctionError(error, t("reportDesignerAiUnavailable"));
+            status.classList.add("error");
+          }
+        }
+      }
+
+      async function readFunctionError(error, fallback) {
+        try {
+          const response = error?.context;
+          if (response && typeof response.clone === "function") {
+            const payload = await response.clone().json();
+            if (payload?.error) return payload.error;
+          }
+        } catch {
+          // Fall back to the client error when the function did not return JSON.
+        }
+        return error?.message || fallback;
+      }
+
+      function renderReportResult(result, { allowSave = true, backToReports = false, criteriaDraft = reportDesignerDraft, criteriaValues = {}, parameterOptions = {} } = {}) {
+        featureActions.innerHTML = `
+          ${allowSave ? `<button class="tool-btn primary" type="button" data-report-save>${t("reportDesignerSave")}</button>` : ""}
+          <button class="tool-btn" type="button" data-report-result-back>${backToReports ? t("myReportsTitle") : t("backToLaunchpad")}</button>`;
+        featureActions.querySelector("[data-report-save]")?.addEventListener("click", () => saveReportDraft());
+        featureActions.querySelector("[data-report-result-back]").addEventListener("click", () => backToReports ? openFeature("myReports") : closeFeature());
+        const columns = result?.columns || [];
+        const rows = result?.rows || [];
+        const parameters = getSavedReportParameters(criteriaDraft || {});
+        const criteriaPanel = parameters.length ? `
+          <div class="form-panel">
+            <h3>${escapeHtml(localText({ "zh-CN": "查询条件", en: "Report Criteria" }))}</h3>
+            <div class="form-grid">${parameters.map((parameter) => renderSavedReportParameter(parameter, criteriaValues[parameter.key] || "", parameterOptions)).join("")}</div>
+            <div class="form-actions"><button class="tool-btn primary" type="button" data-rerun-report>${t("reportDesignerRun")}</button></div>
+            <p class="status-line" id="reportResultCriteriaStatus"></p>
+          </div>` : "";
+        const resultPanel = !columns.length || !rows.length
+          ? `<div class="form-panel"><p class="status-line">${t("reportDesignerNoResults")}</p></div>`
+          : `
+            <div class="form-panel">
+              <h3>${escapeHtml(localText({ "zh-CN": result.zh_title || result.title, en: result.title || result.zh_title }))}</h3>
+              <div class="data-table-wrap"><table class="data-table"><thead><tr>${columns.map((column) => `<th>${escapeHtml(column.label)}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${columns.map((column) => `<td>${escapeHtml(typeof row[column.key] === "number" ? new Intl.NumberFormat(currentLanguage === "zh-CN" ? "zh-CN" : "en-SG", { maximumFractionDigits: 3 }).format(row[column.key]) : row[column.key] || "")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+            </div>`;
+        featureBody.innerHTML = `
+          ${criteriaPanel}
+          ${resultPanel}`;
+        featureBody.querySelector("[data-rerun-report]")?.addEventListener("click", async () => {
+          const status = document.getElementById("reportResultCriteriaStatus");
+          const values = collectReportCriteriaValues(parameters, status);
+          if (!values) return;
+          const rerunDraft = buildReportExecutionDraft(criteriaDraft, values);
+          await executeReportDraft(rerunDraft, { allowSave, backToReports, criteriaDraft, criteriaValues: values });
+        });
+      }
+
+      async function saveReportDraft() {
+        try {
+          reportDesignerDraft = normalizeReportDraftForMetrics(reportDesignerDraft);
+          const client = getClient();
+          const { data: sessionData, error: sessionError } = await client.auth.getSession();
+          if (sessionError) throw sessionError;
+          const title = reportDesignerDraft.title || reportDesignerDraft.question || t("reportDesignerTitle");
+          const zhTitle = reportDesignerDraft.zh_title || title;
+          const description = reportDesignerDraft.explanation || "";
+          const { error } = await client.from("saved_reports").insert({ title, zh_title: zhTitle, description, zh_description: description, model_key: reportDesignerDraft.model_key || null, report_definition: reportDesignerDraft, created_by: sessionData.session?.user?.id, updated_by: sessionData.session?.user?.id });
+          if (error) throw error;
+          openFeature("myReports");
+        } catch (error) {
+          const status = document.getElementById("reportDesignerStatus");
+          if (status) status.textContent = error.message;
+        }
+      }
+
+      function renderMyReports(rows, currentUserId = "") {
+        const status = document.getElementById("myReportsStatus");
+        const container = document.getElementById("myReportsTiles");
+        if (!status || !container) return;
+
+        if (!rows.length) {
+          status.textContent = t("myReportsEmpty");
+          container.innerHTML = "";
+          return;
+        }
+
+        status.textContent = "";
+        container.innerHTML = rows.map((report) => `
+          <article class="tile saved-report-tile" tabindex="0" data-report-id="${escapeHtml(report.id)}">
+            ${report.created_by === currentUserId ? `<button class="saved-report-delete" type="button" data-delete-report="${escapeHtml(report.id)}" aria-label="${escapeHtml(t("myReportsDelete"))}">${escapeHtml(t("myReportsDelete"))}</button>` : ""}
+            <h3>${escapeHtml(localText({ "zh-CN": report.zh_title || report.title, en: report.title || report.zh_title }))}</h3>
+            <div class="sub">${escapeHtml(localText({ "zh-CN": report.zh_description || report.description || "", en: report.description || report.zh_description || "" }))}</div>
+            <div class="saved-report-meta">
+              <span><strong>${escapeHtml(t("myReportsCreatedBy"))}:</strong> ${escapeHtml(report.creator_name || report.created_by || "-")}</span>
+              <span><strong>${escapeHtml(t("myReportsCreatedAt"))}:</strong> ${escapeHtml(formatReportCreatedDate(report.created_at))}</span>
+            </div>
+            <div class="tile-icon">${escapeHtml(report.icon || "R")}</div>
+          </article>
+        `).join("");
+        container.querySelectorAll("[data-report-id]").forEach((tile) => {
+          const report = rows.find((item) => String(item.id) === tile.dataset.reportId);
+          if (!report) return;
+          tile.addEventListener("click", () => openSavedReportRunner(report));
+          tile.addEventListener("keydown", (event) => {
+            if (event.target !== tile) return;
+            if (event.key !== "Enter" && event.key !== " ") return;
+            event.preventDefault();
+            openSavedReportRunner(report);
+          });
+        });
+        container.querySelectorAll("[data-delete-report]").forEach((button) => {
+          button.addEventListener("click", (event) => {
+            event.stopPropagation();
+            const report = rows.find((item) => String(item.id) === button.dataset.deleteReport);
+            if (report) deleteSavedReport(report);
+          });
+        });
+      }
+
+      function formatReportCreatedDate(value) {
+        const date = new Date(value || "");
+        if (Number.isNaN(date.getTime())) return "-";
+        return new Intl.DateTimeFormat(currentLanguage === "zh-CN" ? "zh-CN" : "en-SG", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).format(date);
+      }
+
+      async function deleteSavedReport(report) {
+        if (!window.confirm(t("myReportsDeleteConfirm"))) return;
+        const status = document.getElementById("myReportsStatus");
+        if (status) {
+          status.textContent = t("myReportsDeleting");
+          status.classList.remove("error");
+        }
+        try {
+          const client = getClient();
+          const { data: sessionData, error: sessionError } = await client.auth.getSession();
+          if (sessionError) throw sessionError;
+          const currentUserId = sessionData.session?.user?.id || "";
+          if (!currentUserId || report.created_by !== currentUserId) throw new Error(t("myReportsDeleteOwnOnly"));
+          const { data, error } = await client.functions.invoke("report-designer", {
+            body: { action: "delete_saved_report", report_id: report.id },
+          });
+          if (error) throw error;
+          if (!data?.deleted) throw new Error(t("myReportsDeleteError"));
+          await loadMyReports();
+        } catch (error) {
+          if (status) {
+            status.textContent = await readFunctionError(error, t("myReportsDeleteError"));
+            status.classList.add("error");
+          }
+        }
+      }
+
+      async function openSavedReportRunner(report) {
+        activeSavedReport = report;
+        reportParameterOptions = {};
+        currentFeatureAction = "savedReportRunner";
+        document.body.classList.add("feature-open");
+        workspace.hidden = false;
+        featureTitle.textContent = localText({ "zh-CN": report.zh_title || report.title, en: report.title || report.zh_title });
+        featureSubtitle.textContent = localText({ "zh-CN": "填写可选条件并运行已保存的报表。", en: "Enter optional criteria and run the saved report." });
+        renderSavedReportRunner(true);
+        document.querySelector(".page-heading").scrollIntoView({ behavior: "smooth", block: "start" });
+        const options = await loadReportParameterOptions(report.report_definition || {});
+        if (currentFeatureAction !== "savedReportRunner" || activeSavedReport?.id !== report.id) return;
+        reportParameterOptions = options;
+        renderSavedReportRunner(false);
+      }
+
+      function renderSavedReportRunner(optionsLoading = false) {
+        const definition = activeSavedReport?.report_definition || {};
+        const parameters = getSavedReportParameters(definition);
+        featureActions.innerHTML = `
+          <button class="tool-btn primary" type="button" data-run-saved-report ${optionsLoading ? "disabled" : ""}>${t("reportDesignerRun")}</button>
+          <button class="tool-btn" type="button" data-back-my-reports>${t("myReportsTitle")}</button>`;
+        featureBody.innerHTML = `
+          <div class="form-panel">
+            <h3>${escapeHtml(localText({ "zh-CN": "查询条件", en: "Report Criteria" }))}</h3>
+            ${parameters.length ? `<div class="form-grid">${parameters.map((parameter) => renderSavedReportParameter(parameter, "", reportParameterOptions, optionsLoading)).join("")}</div>` : `<p class="status-line">${escapeHtml(localText({ "zh-CN": "此报表没有可选条件，将按已保存的定义运行。", en: "This report has no optional criteria and will run with its saved definition." }))}</p>`}
+            <p class="status-line" id="savedReportStatus">${optionsLoading ? t("reportDesignerOptionsLoading") : ""}</p>
+          </div>`;
+        featureActions.querySelector("[data-run-saved-report]").addEventListener("click", runSavedReport);
+        featureActions.querySelector("[data-back-my-reports]").addEventListener("click", () => openFeature("myReports"));
+      }
+
+      function renderSavedReportParameter(parameter, selectedValue = "", optionMap = reportParameterOptions, optionsLoading = false) {
+        const key = escapeHtml(parameter.key || "");
+        const label = escapeHtml(localText({ "zh-CN": parameter.zh_label || parameter.label || parameter.field, en: parameter.label || parameter.zh_label || parameter.field }));
+        const required = parameter.required ? "required" : "";
+        if (parameter.input_type === "date") {
+          return `<label>${label}<input type="date" value="${escapeHtml(selectedValue)}" data-report-parameter="${key}" ${required}></label>`;
+        }
+        const values = [...new Set([...(optionMap[parameter.field] || []), ...(parameter.options || []), ...(selectedValue ? [selectedValue] : [])])];
+        const options = values.map((option) => `<option value="${escapeHtml(option)}" ${option === selectedValue ? "selected" : ""}>${escapeHtml(option)}</option>`).join("");
+        const loadingOption = optionsLoading && !values.length ? `<option value="" disabled>${escapeHtml(t("reportDesignerOptionsLoading"))}</option>` : "";
+        return `<label>${label}<select data-report-parameter="${key}" ${required} ${optionsLoading ? "disabled" : ""}><option value="">${escapeHtml(localText({ "zh-CN": "全部", en: "All" }))}</option>${loadingOption}${options}</select></label>`;
+      }
+
+      async function loadReportParameterOptions(definition) {
+        const parameters = getSavedReportParameters(definition);
+        if (!parameters.some((parameter) => parameter.input_type !== "date")) return {};
+        try {
+          const { data, error } = await getClient().functions.invoke("report-designer", {
+            body: { action: "parameter_options", draft: { ...definition, parameters } },
+          });
+          if (error) throw error;
+          return data?.options || {};
+        } catch {
+          return {};
+        }
+      }
+
+      function collectReportCriteriaValues(parameters, status) {
+        const values = {};
+        if (status) {
+          status.textContent = "";
+          status.classList.remove("error");
+        }
+        for (const parameter of parameters) {
+          const input = featureBody.querySelector(`[data-report-parameter="${CSS.escape(parameter.key || "")}"]`);
+          const value = input?.value?.trim() || "";
+          if (!value && parameter.required) {
+            if (status) {
+              status.textContent = localText({ "zh-CN": "请填写所有必填条件。", en: "Complete all required criteria." });
+              status.classList.add("error");
+            }
+            input?.focus();
+            return null;
+          }
+          values[parameter.key] = value;
+        }
+        return values;
+      }
+
+      function buildReportExecutionDraft(definition, values) {
+        const parameters = getSavedReportParameters(definition);
+        const runtimeFilters = parameters.flatMap((parameter) => {
+          const value = values[parameter.key] || "";
+          return value ? [{ field: parameter.field, operator: parameter.operator || "=", value }] : [];
+        });
+        return {
+          ...definition,
+          filters: [...(Array.isArray(definition.filters) ? definition.filters : []), ...runtimeFilters],
+          parameters,
+        };
+      }
+
+      function renderReportSearchFieldChoices() {
+        const compatibleFields = getCompatibleReportDimensions(reportDesignerDraft.metrics || []);
+        const selectedFields = new Set((reportDesignerDraft.parameters || []).map((parameter) => parameter.field));
+        return compatibleFields.map((field) => {
+          const [label, zhLabel] = getReportFieldLabels(field);
+          const displayLabel = localText({ "zh-CN": zhLabel, en: label });
+          return `<label class="checkbox-field"><input type="checkbox" value="${escapeHtml(field)}" data-report-search-field ${selectedFields.has(field) ? "checked" : ""}> ${escapeHtml(displayLabel)}</label>`;
+        }).join("");
+      }
+
+      function getReportFieldLabels(field) {
+        const labels = {
+          sales_order_date: ["Sales Order Date", "销售订单日期"],
+          purchase_order_date: ["Purchase Order Date", "采购订单日期"],
+          stock_movement_date: ["Stock Movement Date", "库存变动日期"],
+          customer: ["Customer", "客户"],
+          customer_country: ["Customer Country", "客户国家"],
+          customer_city: ["Customer City", "客户城市"],
+          supplier: ["Supplier", "供应商"],
+          product: ["Product", "产品"],
+          product_category: ["Product Category", "产品分类"],
+          sales_order_status: ["Sales Order Status", "销售订单状态"],
+          purchase_order_status: ["Purchase Order Status", "采购订单状态"],
+          stock_movement_type: ["Stock Movement Type", "库存变动类型"],
+        };
+        return labels[field] || [field, field];
+      }
+
+      function createDefaultReportParameters(field) {
+        const [label, zhLabel] = getReportFieldLabels(field);
+        if (field.endsWith("_date")) {
+          return [
+            { key: `${field}_from`, label: `From ${label}`, zh_label: `${zhLabel}从`, field, operator: ">=", input_type: "date", required: false, options: [] },
+            { key: `${field}_to`, label: `To ${label}`, zh_label: `${zhLabel}至`, field, operator: "<=", input_type: "date", required: false, options: [] },
+          ];
+        }
+        return [{ key: field, label, zh_label: zhLabel, field, operator: "=", input_type: "text", required: false, options: [] }];
+      }
+
+      function getSavedReportParameters(definition) {
+        if (definition.parameters_configured) return Array.isArray(definition.parameters) ? definition.parameters : [];
+        if (Array.isArray(definition.parameters) && definition.parameters.length) return definition.parameters;
+        const metrics = Array.isArray(definition.metrics) ? definition.metrics : [];
+        const compatibleFields = getCompatibleReportDimensions(metrics);
+        const fields = compatibleFields.length
+          ? compatibleFields
+          : (Array.isArray(definition.dimensions) ? definition.dimensions : []);
+        return fields.flatMap((field) => createDefaultReportParameters(field)).slice(0, 10);
+      }
+
+      function getCompatibleReportDimensions(metrics) {
+        const dimensionsByMetric = {
+          sales_amount: ["sales_order_date", "customer", "customer_country", "customer_city", "sales_order_status", "product", "product_category"],
+          sales_order_count: ["sales_order_date", "customer", "customer_country", "customer_city", "sales_order_status", "product", "product_category"],
+          sales_quantity: ["sales_order_date", "customer", "customer_country", "customer_city", "sales_order_status", "product", "product_category"],
+          estimated_gross_profit: ["sales_order_date", "customer", "customer_country", "customer_city", "sales_order_status", "product", "product_category"],
+          purchase_amount: ["purchase_order_date", "supplier", "purchase_order_status", "product", "product_category"],
+          purchase_quantity: ["purchase_order_date", "supplier", "purchase_order_status", "product", "product_category"],
+          stock_quantity: ["product", "product_category"],
+          low_stock_item_count: ["product", "product_category"],
+          inbound_quantity: ["stock_movement_date", "stock_movement_type", "product", "product_category"],
+          outbound_quantity: ["stock_movement_date", "stock_movement_type", "product", "product_category"],
+        };
+        const supportedLists = metrics.map((metric) => dimensionsByMetric[metric]).filter(Boolean);
+        return supportedLists.length
+          ? supportedLists[0].filter((field) => supportedLists.every((list) => list.includes(field)))
+          : [];
+      }
+
+      function normalizeReportDraftForMetrics(draft) {
+        const metrics = Array.isArray(draft?.metrics) ? [...new Set(draft.metrics)] : [];
+        const compatibleFields = new Set(getCompatibleReportDimensions(metrics));
+        const keepField = (item) => compatibleFields.has(item?.field);
+        let title = String(draft?.title || "").trim();
+        let zhTitle = String(draft?.zh_title || "").trim();
+        let explanation = String(draft?.explanation || "");
+        const isPurchaseOnly = metrics.length > 0 && metrics.every((metric) => ["purchase_amount", "purchase_quantity"].includes(metric));
+        const isSalesOnly = metrics.length > 0 && metrics.every((metric) => ["sales_amount", "sales_order_count", "sales_quantity", "estimated_gross_profit"].includes(metric));
+        const isInventoryOnly = metrics.length > 0 && metrics.every((metric) => ["stock_quantity", "low_stock_item_count", "inbound_quantity", "outbound_quantity"].includes(metric));
+        const combinedTitle = `${title} ${zhTitle}`;
+        if (isPurchaseOnly && (!title || !zhTitle || /sales|customer|vip|销售|客户/i.test(combinedTitle))) {
+          title = "Purchasing Report";
+          zhTitle = "采购报表";
+        }
+        if (isSalesOnly && (!title || !zhTitle || /purchase|supplier|采购|供应商/i.test(combinedTitle))) {
+          title = "Sales Report";
+          zhTitle = "销售报表";
+        }
+        if (isInventoryOnly && (!title || !zhTitle || /sales|customer|purchase|supplier|销售|客户|采购|供应商/i.test(combinedTitle))) {
+          title = "Inventory Report";
+          zhTitle = "库存报表";
+        }
+        if (isPurchaseOnly && /sales|customer|销售|客户/i.test(explanation)) explanation = "This report retrieves purchasing data using the selected metrics, dimensions, and optional criteria.";
+        if (isSalesOnly && /purchase|supplier|采购|供应商/i.test(explanation)) explanation = "This report retrieves sales data using the selected metrics, dimensions, and optional criteria.";
+        if (isInventoryOnly && /sales|customer|purchase|supplier|销售|客户|采购|供应商/i.test(explanation)) explanation = "This report retrieves inventory data using the selected metrics, dimensions, and optional criteria.";
+        const normalized = {
+          ...draft,
+          title,
+          zh_title: zhTitle,
+          metrics,
+          dimensions: (Array.isArray(draft?.dimensions) ? draft.dimensions : []).filter((field) => compatibleFields.has(field)),
+          filters: (Array.isArray(draft?.filters) ? draft.filters : []).filter(keepField),
+          parameters: (Array.isArray(draft?.parameters) ? draft.parameters : []).filter(keepField),
+          order_by: (Array.isArray(draft?.order_by) ? draft.order_by : []).filter((item) => metrics.includes(item?.metric)),
+          explanation,
+        };
+        normalized.dimensions = applyExplicitReportGroupings(normalized);
+        return normalized;
+      }
+
+      function applyExplicitReportGroupings(draft) {
+        const pageRequirementText = Object.values(draft?.page_requirements || {}).join("\n");
+        const requestText = `${draft?.question || ""}\n${draft?.additional_requirements || ""}\n${pageRequirementText}`;
+        const groupingRules = [
+          { field: "supplier", pattern: /按(?:照)?\s*供应商(?:汇总|统计|分组|排行|输出)?|供应商(?:汇总|统计|分组)|(?:group|grouped|summarize|summarized|aggregate|aggregated|breakdown)\s+by\s+(?:the\s+)?supplier|\bby supplier\b/i },
+          { field: "customer", pattern: /按(?:照)?\s*客户(?:汇总|统计|分组|排行|输出)?|客户(?:汇总|统计|分组)|(?:group|grouped|summarize|summarized|aggregate|aggregated|breakdown)\s+by\s+(?:the\s+)?customer|\bby customer\b/i },
+          { field: "product", pattern: /按(?:照)?\s*(?:产品|商品)(?:汇总|统计|分组|排行|输出)?|(?:产品|商品)(?:汇总|统计|分组)|(?:group|grouped|summarize|summarized|aggregate|aggregated|breakdown)\s+by\s+(?:the\s+)?product|\bby product\b/i },
+          { field: "product_category", pattern: /按(?:照)?\s*(?:产品|商品)?分类(?:汇总|统计|分组|排行|输出)?|(?:产品|商品)分类(?:汇总|统计|分组)|(?:group|grouped|summarize|summarized|aggregate|aggregated|breakdown)\s+by\s+(?:the\s+)?(?:product\s+)?category|\bby (?:product )?category\b/i },
+        ];
+        const compatible = new Set(getCompatibleReportDimensions(draft.metrics || []));
+        const requested = groupingRules.filter((rule) => rule.pattern.test(requestText) && compatible.has(rule.field)).map((rule) => rule.field);
+        return [...new Set([...requested, ...(draft.dimensions || [])])].slice(0, 4);
+      }
+
+      async function runSavedReport() {
+        const definition = activeSavedReport?.report_definition || {};
+        const parameters = getSavedReportParameters(definition);
+        const status = document.getElementById("savedReportStatus");
+        const values = collectReportCriteriaValues(parameters, status);
+        if (!values) return;
+        const criteriaDraft = {
+          ...definition,
+          question: definition.question || activeSavedReport.title,
+          title: definition.title || activeSavedReport.title,
+          zh_title: definition.zh_title || activeSavedReport.zh_title || activeSavedReport.title,
+          parameters,
+        };
+        const executionDraft = buildReportExecutionDraft(criteriaDraft, values);
+        await executeReportDraft(executionDraft, { allowSave: false, backToReports: true, criteriaDraft, criteriaValues: values });
+      }
+
+      async function loadMyReports() {
+        if (!window.xmbSupabaseClient) {
+          renderMyReports([]);
+          return;
+        }
+        try {
+          const { data, error } = await getClient()
+            .from("saved_reports")
+            .select("id,title,zh_title,description,zh_description,icon,allowed_roles,is_active,created_at,updated_at,model_key,report_definition,created_by")
+            .eq("is_active", true)
+            .order("updated_at", { ascending: false });
+          if (error) throw error;
+          const { data: sessionData, error: sessionError } = await getClient().auth.getSession();
+          if (sessionError) throw sessionError;
+          const currentUserId = sessionData.session?.user?.id || "";
+          const creatorIds = [...new Set((data || []).map((report) => report.created_by).filter(Boolean))];
+          const creatorsResult = creatorIds.length
+            ? await getClient().from("users").select("id,display_name,zh_display_name").in("id", creatorIds)
+            : { data: [] };
+          const creatorsById = new Map((creatorsResult.data || []).map((creator) => [creator.id, creator]));
+          const visibleReports = (data || [])
+            .filter((report) => !Array.isArray(report.allowed_roles) || report.allowed_roles.includes(activeRole))
+            .map((report) => {
+              const creator = creatorsById.get(report.created_by);
+              return {
+                ...report,
+                creator_name: creator ? localText({ "zh-CN": creator.zh_display_name || creator.display_name, en: creator.display_name || creator.zh_display_name }) : report.created_by,
+              };
+            });
+          renderMyReports(visibleReports, currentUserId);
+        } catch (error) {
+          const isMissingTable = error.code === "PGRST205" || /saved_reports/i.test(error.message || "") && /schema cache|does not exist/i.test(error.message || "");
+          if (isMissingTable) {
+            renderMyReports([]);
+            return;
+          }
+          const status = document.getElementById("myReportsStatus");
+          if (status) {
+            status.textContent = t("myReportsLoadError");
+            status.classList.add("error");
+          }
+        }
+      }
+
+      async function loadReportDesignerModels() {
+        if (!window.xmbSupabaseClient) return;
+        try {
+          const { data, error } = await getClient().from("ai_model_catalog").select("model_key,display_name").eq("is_active", true).order("sort_order", { ascending: true });
+          if (error) throw error;
+          reportDesignerModels = data || [];
+          if (!reportDesignerDraft.model_key) reportDesignerDraft.model_key = reportDesignerModels[0]?.model_key || "";
+          if (currentFeatureAction === "reportDesigner" && reportDesignerStep === 1) renderReportDesigner();
+        } catch {
+          reportDesignerModels = [];
+        }
+      }
+
       function openSmartQuery() {
         smartQueryReturnFocus = document.activeElement;
         smartQueryModal.hidden = false;
@@ -3484,6 +4350,7 @@
         smartQueryInput.value = "";
         smartQueryStatus.textContent = t("smartQueryHint");
         smartQueryStatus.classList.remove("error");
+        smartQueryNewReport.hidden = true;
         requestAnimationFrame(() => smartQueryInput.focus());
       }
 
@@ -3535,6 +4402,7 @@
         if (!destination) {
           smartQueryStatus.textContent = t("smartQueryNoMatch");
           smartQueryStatus.classList.add("error");
+          smartQueryNewReport.hidden = false;
           return;
         }
         if (destination.action === "salesAnalytics") {
@@ -7077,11 +7945,27 @@
         runSmartQuery(smartQueryInput.value);
       });
 
+      smartQueryNewReport.addEventListener("click", async () => {
+        if (await confirmAiBilling()) openReportDesigner(smartQueryInput.value.trim());
+      });
+
       smartQueryModal.addEventListener("click", (event) => {
         if (event.target === smartQueryModal || event.target.closest("[data-smart-query-close]")) closeSmartQuery();
       });
 
+      aiBillingModal.addEventListener("click", (event) => {
+        if (event.target.closest("[data-ai-billing-confirm]")) {
+          closeAiBilling(true);
+          return;
+        }
+        if (event.target === aiBillingModal || event.target.closest("[data-ai-billing-cancel]")) closeAiBilling(false);
+      });
+
       document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !aiBillingModal.hidden) {
+          closeAiBilling(false);
+          return;
+        }
         if (event.key === "Escape" && !smartQueryModal.hidden) closeSmartQuery();
       });
     })();
